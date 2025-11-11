@@ -1,0 +1,3813 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" style=""><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML/CSS 에센셜 강의 자료</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;family=JetBrains+Mono:wght@300;400;500&amp;display=swap">
+    <style>
+      /* 라이트 모드 최적화 색상 팔레트 */
+      :root {
+        --primary-blue: #2563eb;
+        --primary-blue-light: #3b82f6;
+        --primary-blue-dark: #1d4ed8;
+        
+        --secondary-indigo: #6366f1;
+        --secondary-purple: #8b5cf6;
+        
+        --success-green: #059669;
+        --success-green-light: #10b981;
+        --warning-orange: #d97706;
+        --error-red: #dc2626;
+        --info-cyan: #0891b2;
+        
+        --gray-50: #f9fafb;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
+        --gray-600: #4b5563;
+        --gray-700: #374151;
+        --gray-800: #1f2937;
+        --gray-900: #111827;
+        
+        /* 메인 컬러 변수 */
+        --bg-color: #ffffff;
+        --text-color: var(--gray-800);
+        --heading-color: var(--gray-900);
+        --subheading-color: var(--gray-700);
+        --accent-color: var(--primary-blue);
+        --accent-hover: var(--primary-blue-dark);
+        --border-color: var(--gray-200);
+        
+        /* 컴포넌트별 색상 */
+        --toc-bg: linear-gradient(135deg, var(--gray-50) 0%, #ffffff 100%);
+        --toc-border: var(--primary-blue);
+        
+        --highlight-bg: #fef3c7;
+        --highlight-border: var(--warning-orange);
+        --highlight-text: #92400e;
+        
+        --note-bg: #dbeafe;
+        --note-border: var(--info-cyan);
+        --note-text: #0c4a6e;
+        
+        --important-bg: #fee2e2;
+        --important-border: var(--error-red);
+        --important-text: #991b1b;
+        
+        --code-bg: var(--gray-100);
+        --code-border: var(--gray-300);
+        
+        --lesson-bg: #eff6ff;
+        --lesson-border: var(--primary-blue);
+        --lesson-icon: var(--primary-blue);
+        
+        --exercise-bg: #fff7ed;
+        --exercise-border: var(--warning-orange);
+        --exercise-icon: var(--warning-orange);
+        
+        --quiz-bg: #faf5ff;
+        --quiz-border: var(--secondary-purple);
+        --quiz-icon: var(--secondary-purple);
+        
+        --summary-bg: #ecfdf5;
+        --summary-border: var(--success-green);
+        --summary-icon: var(--success-green);
+        
+        --key-concept-bg: #fffbeb;
+        --key-concept-border: #f59e0b;
+        --key-concept-icon: #d97706;
+        
+        /* 그림자와 효과 */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        
+        /* 전환 효과 */
+        --transition-fast: all 0.15s ease;
+        --transition-normal: all 0.3s ease;
+        --transition-slow: all 0.5s ease;
+        
+        /* 둥근 모서리 */
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+      }
+
+      body {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        position: relative;
+        box-sizing: border-box;
+        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.7;
+        text-align: left;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      @media print {
+        body {
+          margin: 0;
+          padding: 15mm;
+        }
+        
+        .page-break {
+          page-break-after: always;
+        }
+      }
+
+      .page-break {
+        page-break-after: always;
+        break-after: always;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--heading-color);
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      h1::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent-color), var(--heading-color));
+        margin: 1rem auto;
+        border-radius: 2px;
+      }
+
+      h2 {
+        color: var(--subheading-color);
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 0.75rem;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        font-weight: 600;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      h2::before {
+        counter-increment: chapter-counter;
+        background-color: var(--accent-color);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+      }
+
+      h3 {
+        color: var(--heading-color);
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      h3::before {
+        content: '▶';
+        color: var(--accent-color);
+        font-size: 0.8em;
+      }
+
+      h4 {
+        color: var(--subheading-color);
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      h5 {
+        color: var(--heading-color);
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      body {
+        counter-reset: chapter-counter;
+      }
+
+      .toc {
+        background: linear-gradient(135deg, var(--toc-bg) 0%, rgba(255,255,255,0.8) 100%);
+        padding: 2rem;
+        margin: 3rem 0;
+        border: 2px solid var(--accent-color);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .toc:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .toc h2 {
+        margin-top: 0;
+        border-bottom: none;
+        text-align: center;
+        color: var(--heading-color);
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .toc h2::before {
+        display: none;
+      }
+
+      .toc h2::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 3px;
+        background: var(--accent-color);
+        margin: 1rem auto 0;
+        border-radius: 2px;
+      }
+
+      .toc ol {
+        margin-left: 0;
+        counter-reset: toc-counter;
+      }
+
+      .toc > ol > li {
+        counter-increment: toc-counter;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .toc > ol > li::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: var(--accent-color);
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+
+      .toc ul {
+        margin-left: 1.5rem;
+        margin-top: 0.5rem;
+      }
+
+      .toc ul li {
+        margin-bottom: 0.25rem;
+        font-weight: 400;
+        color: var(--subheading-color);
+      }
+
+
+
+      code {
+        background-color: var(--code-bg);
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+        font-size: 0.85em;
+        font-weight: 500;
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      pre {
+        background-color: var(--code-bg);
+        padding: 1.5rem;
+        border-radius: 12px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        margin: 1.5rem 0;
+        line-height: 1.5;
+      }
+
+      pre code {
+        background: none;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        font-size: 0.9em;
+      }
+
+      .highlight {
+        background-color: var(--highlight-bg);
+        padding: 1.5rem;
+        border-left: 4px solid var(--highlight-border);
+        margin: 1.5rem 0;
+        border-radius: 12px;
+        border: 1px solid var(--highlight-border);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .highlight::before {
+        content: '💡 주요 내용';
+        position: absolute;
+        top: -12px;
+        left: 1rem;
+        background-color: var(--highlight-border);
+        color: #fff;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .note {
+        background-color: var(--note-bg);
+        padding: 1.5rem;
+        border-left: 4px solid var(--note-border);
+        margin: 1.5rem 0;
+        border-radius: 12px;
+        border: 1px solid var(--note-border);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .note::before {
+        content: '📝 참고사항';
+        position: absolute;
+        top: -12px;
+        left: 1rem;
+        background-color: var(--note-border);
+        color: #fff;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .important {
+        background-color: var(--important-bg);
+        padding: 1.5rem;
+        border-left: 4px solid var(--important-border);
+        margin: 1.5rem 0;
+        border-radius: 12px;
+        border: 1px solid var(--important-border);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .important::before {
+        content: '⚠️ 중요사항';
+        position: absolute;
+        top: -12px;
+        left: 1rem;
+        background-color: var(--important-border);
+        color: #fff;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      /* 강의용 추가 클래스 */
+      .lesson-objective {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: black;
+        padding: 2rem;
+        border-radius: 16px;
+        margin: 2rem 0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .lesson-objective h3 {
+        color: white;
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .lesson-objective h3::before {
+        content: '🎯';
+        font-size: 1.2em;
+      }
+
+      .key-concept {
+        background-color: var(--accent-color);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .exercise {
+        background-color: var(--toc-bg);
+        padding: 1.5rem;
+        border: 2px dashed var(--accent-color);
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        position: relative;
+      }
+
+      .exercise::before {
+        content: '🔨 실습';
+        position: absolute;
+        top: -12px;
+        left: 1rem;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .quiz {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: black;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        position: relative;
+      }
+
+      .quiz::before {
+        content: '❓ 퀴즈';
+        position: absolute;
+        top: -12px;
+        left: 1rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #f5576c;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .summary {
+        background-color: var(--toc-bg);
+        padding: 2rem;
+        border-radius: 16px;
+        margin: 2rem 0;
+        border: 2px solid var(--accent-color);
+        position: relative;
+      }
+
+      .summary::before {
+        content: '📋 요약';
+        position: absolute;
+        top: -12px;
+        left: 1rem;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      ul,
+      ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+      }
+
+      ul li::marker {
+        color: var(--accent-color);
+      }
+
+      ol li::marker {
+        color: var(--accent-color);
+        font-weight: 600;
+      }
+
+      strong {
+        color: var(--heading-color);
+        transition: color 0.3s ease;
+      }
+
+      em {
+        color: var(--accent-color);
+        transition: color 0.3s ease;
+      }
+
+      a {
+        color: var(--accent-color);
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--heading-color);
+      }
+
+      /* 상단 네비게이션 바 */
+      .lecture-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .lecture-nav .logo {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--heading-color);
+      }
+
+      .nav-controls {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+
+
+      /* 진행률 표시 */
+      .progress-indicator {
+        background: var(--toc-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+      }
+
+      /* 상단 네비게이션 때문에 body에 여백 추가 */
+      body {
+        padding-top: 100px;
+      }
+
+      /* 강의용 컴포넌트 스타일 */
+      .lesson-objective {
+        background: linear-gradient(135deg, var(--lesson-bg) 0%, rgba(33, 150, 243, 0.1) 100%);
+        border-left: 5px solid var(--lesson-border);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .lesson-objective h4 {
+        margin-top: 0;
+        color: var(--lesson-border);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .lesson-objective h4::before {
+        content: '🎯';
+        font-size: 1.2em;
+      }
+
+      .key-concept {
+        background: linear-gradient(135deg, var(--key-concept-bg) 0%, rgba(255, 193, 7, 0.1) 100%);
+        border-left: 5px solid var(--key-concept-border);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .key-concept h4 {
+        margin-top: 0;
+        color: var(--key-concept-border);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .key-concept h4::before {
+        content: '💡';
+        font-size: 1.2em;
+      }
+
+      .exercise {
+        background: linear-gradient(135deg, var(--exercise-bg) 0%, rgba(255, 152, 0, 0.1) 100%);
+        border-left: 5px solid var(--exercise-border);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .exercise h4 {
+        margin-top: 0;
+        color: var(--exercise-border);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .exercise h4::before {
+        content: '✏️';
+        font-size: 1.2em;
+      }
+
+      .quiz {
+        background: linear-gradient(135deg, var(--quiz-bg) 0%, rgba(156, 39, 176, 0.1) 100%);
+        border-left: 5px solid var(--quiz-border);
+        color: black;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .quiz h4 {
+        margin-top: 0;
+        color: var(--quiz-border);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .quiz h4::before {
+        content: '❓';
+        font-size: 1.2em;
+      }
+
+      .summary {
+        background: linear-gradient(135deg, var(--summary-bg) 0%, rgba(76, 175, 80, 0.1) 100%);
+        border-left: 5px solid var(--summary-border);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .summary h4 {
+        margin-top: 0;
+        color: var(--summary-border);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .summary h4::before {
+        content: '📝';
+        font-size: 1.2em;
+      }
+
+      /* SVG 아이콘 스타일 */
+      svg {
+        transition: stroke 0.3s ease;
+      }
+
+
+    </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Open%20Sans:wght@400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Noto%20Sans%20JP:wght@400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;display=swap" rel="stylesheet"></head>
+  <body style="">
+    <!-- 상단 네비게이션 바 -->
+    <nav class="lecture-nav">
+      <div class="logo">🚀 HTML/CSS</div>
+      <div class="nav-controls">
+        <div class="progress-indicator"><br></div>
+      </div>
+    </nav>
+    <!-- 표지 페이지 -->
+    <div class="cover-page">
+      <div class="cover-content">
+        <div class="cover-header">
+          <div class="cover-icon">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#3498db" stroke-width="2" stroke-linejoin="round"></path>
+              <path d="M2 17L12 22L22 17" stroke="#3498db" stroke-width="2" stroke-linejoin="round"></path>
+              <path d="M2 12L12 17L22 12" stroke="#3498db" stroke-width="2" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h1 class="cover-title">HTML/CSS</h1>
+          <h2 class="cover-subtitle" style="color: rgb(55, 65, 81);"><span style="font-size: 2rem; font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">웹 개발의 기초를 탄탄히</span></h2>
+        </div>
+        
+        <div class="cover-main">
+          <div class="cover-description">
+            <p>웹 개발의 핵심인 HTML과 CSS를 체계적으로 학습할 수 있는 종합 강의 자료입니다.</p>
+            <p>기초부터 심화까지, 실무에서 바로 활용할 수 있는 실용적인 내용을 담았습니다.</p>
+          </div>
+          
+          <div class="cover-features">
+            <div class="feature-item">
+              <div class="feature-icon"><br></div></div></div></div><div class="cover-footer"><div class="cover-stats">
+          </div>
+          
+          <div class="cover-source">
+            
+            <p class="cover-date">강사: 안형노</p></div></div></div></div>
+
+    <section class="toc">
+      <h2>목차</h2>
+      <ol>
+        <li><a href="#chapter1">들어가기 전</a>
+          <ul>
+            <li><a href="#vscode">Visual Studio Code</a></li>
+            <li><a href="#preparation">수업 전 알아 두기</a></li>
+            <li><a href="#preparation">웹 Web 이란?</a></li>
+            <li><a href="#preparation">HTML5</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter2">HTML</a>
+          <ul>
+            <li><a href="#html-anatomy">HTML 문서해부</a></li>
+            <li><a href="#html-syntax">HTML 기본 문법</a></li>
+            <li><a href="#snippet">스니펫 만들기</a></li>
+            <li><a href="#emmet">Emmet 실습!</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter3">일단 글을 적어보자!</a>
+          <ul>
+            <li><a href="#text-tags">텍스트와 관련된 태그들</a></li>
+            <li><a href="#list-tags">목록 관련 태그 ul,ol,dl</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter4">어떤 태그는 줄바꿈이 되고 어떤 것은 안될까?</a>
+          <ul>
+            <li><a href="#block-inline">블록 레벨 요소 vs 인라인 요소</a></li>
+            <li><a href="#content-categories">콘텐츠 카테고리 (HTML5)</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter5">이미지도 넣어보자!</a>
+          <ul>
+            <li><a href="#img-tag">이미지 img</a></li>
+            <li><a href="#about-me">about me 페이지 만들기</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter6">어떻게 배치하면 좋을까?</a>
+          <ul>
+            <li><a href="#accessibility">웹 접근성</a></li>
+            <li><a href="#layout-history">Layout History</a></li>
+            <li><a href="#semantic-elements">Semantic Elements (시맨틱 요소)</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter7">웹페이지에 다양한 컨텐츠를 넣고 싶어!</a>
+          <ul>
+            <li><a href="#table">표(table)</a></li>
+            <li><a href="#media">video &amp; audio</a></li>
+            <li><a href="#iframe">iframe</a></li>
+            <li><a href="#svg-canvas">SVG, Canvas</a></li>
+            <li><a href="#form">양식(form)</a></li>
+            <li><a href="#other-tags">그 외 다양한 태그들</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter8">검색도 잘되게 해보자</a>
+          <ul>
+            <li><a href="#seo">검색엔진 최적화(SEO)</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter9">CSS</a>
+          <ul>
+            <li><a href="#css-basic">CSS 기본</a></li>
+            <li><a href="#css-apply">CSS 적용하기</a></li>
+            <li><a href="#css-inheritance">CSS 상속</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter10">CSS 선택자</a>
+          <ul>
+            <li><a href="#selector-basic">선택자 기초</a></li>
+            <li><a href="#complex-selectors">복합 선택자</a></li>
+            <li><a href="#selector-priority">선택자 우선순위</a></li>
+            <li><a href="#naming-rules">네이밍 규칙</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter11">텍스트 관련 속성</a>
+          <ul>
+            <li><a href="#text-styling">텍스트 꾸미기</a></li>
+            <li><a href="#units">단위</a></li>
+            <li><a href="#list-style">list-style</a></li>
+            <li><a href="#pseudo-classes">가상 클래스와 가상 요소</a></li>
+            <li><a href="#css-variables">CSS 변수</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter12">CSS의 기본, Box Model</a>
+          <ul>
+            <li><a href="#box-model">CSS Box Model</a></li>
+            <li><a href="#display">display 속성</a></li>
+            <li><a href="#image-ratio">이미지 비율 유지하기</a></li>
+            <li><a href="#css-reset">CSS 초기화</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter13">CSS 레이아웃 기초</a>
+          <ul>
+            <li><a href="#position">position</a></li>
+            <li><a href="#z-index">z-index</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter14">CSS 레이아웃 심화</a>
+          <ul>
+            <li><a href="#float">float</a></li>
+            <li><a href="#flex">flex</a></li>
+            <li><a href="#grid">grid</a></li>
+            <li><a href="#advanced-selectors">선택자 심화</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter15">CSS 애니메이션 및 트랜지션</a>
+          <ul>
+            <li><a href="#transform">transform</a></li>
+            <li><a href="#transition">transition</a></li>
+            <li><a href="#animation">animation</a></li>
+            <li><a href="#3d-properties">3D 관련 속성들</a></li>
+          </ul>
+        </li>
+        <li><a href="#chapter16">반응형 웹 디자인</a>
+          <ul>
+            <li><a href="#responsive-web">반응형 웹</a></li>
+            <li><a href="#css-functions">CSS 함수</a></li>
+            <li><a href="#media-queries">미디어 쿼리</a></li>
+            <li><a href="#responsive-images">반응형 이미지</a></li></ul></li></ol></section><section id="chapter1" class="page-break">
+
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>웹 개발 환경 설정 및 도구 사용법 이해</li>
+          <li>웹의 기본 개념과 역사 학습</li>
+          <li>HTML5의 주요 특징과 표준 이해</li>
+          <li>개발 환경 최적화 및 생산성 향상</li>
+        </ul>
+      </div>
+
+      <h2>1장 들어가기 전</h2>
+
+      <section id="vscode">
+        <h3>1.1 Visual Studio Code</h3>
+
+        <div class="key-concept">
+          <h4>핵심 개념</h4>
+          <p><strong>Visual Studio Code</strong><span style="color: rgb(0, 0, 0);">는 마이크로소프트에서 개발한 무료 소스 코드 편집기로, 웹 개발에 필수적인 도구입니다.</span></p>
+        </div>
+
+        <h4>정의</h4>
+        <p>가볍고 빠르며 풍부한 확장 기능을 가진 통합 개발 환경(IDE) 역할을 하는 소스 코드 편집기입니다.</p>
+
+        <h4>설치</h4>
+        <p><a href="https://code.visualstudio.com/Download" target="_blank">Visual Studio Code 공식 웹사이트</a>에서 다운로드하여 설치할 수 있습니다.</p>
+
+        <h4>필수 확장 프로그램</h4>
+        <ul>
+          <li><strong>Live Server</strong>: 웹 페이지를 실시간으로 브라우저에 표시하여 개발 효율성을 높입니다.</li>
+          <li>
+            <strong>Prettier - Code formatter</strong>: 코드 서식을 자동으로 지정하여 일관된 코드 스타일을 유지합니다.
+          </li>
+        </ul>
+
+        <h4>유용한 단축키</h4>
+        <p>
+          탐색창 열기/닫기, 다른 이름으로 저장, 선택 줄 복사/이동/삭제, 다중 라인 수정 등 다양한 단축키를 활용할 수
+          있습니다.
+        </p><ul><li><font color="#111827"><b>command(Ctrl) + B</b></font>:&nbsp;VSC 왼쪽 탐색창 열기/닫기</li><li><font color="#111827"><b>command(Ctrl) + shift + S</b></font>: 다른 이름으로 저장</li><li><font color="#111827"><b>shift + option(Alt) + (위, 아래):&nbsp;</b></font>선택 줄 복사</li><li><font color="#111827"><b>option(Alt) + 위아래 방향키:&nbsp;</b></font>선택&nbsp;줄 이동</li><li><font color="#111827"><b>command(Ctrl) + shift + k:&nbsp;</b></font>한 줄 삭제</li><li><font color="#111827"><b>command(Ctrl) + option + (위, 아래):&nbsp;</b></font>다중 라인 수정</li></ul>
+
+        <div class="exercise">
+          <h4>실습: VS Code 설치하기</h4>
+          <ol>
+            <li>Visual Studio Code 공식 웹사이트에 접속하세요.</li>
+            <li>운영체제에 맞는 버전을 다운로드하세요.</li>
+            <li>설치 후 Live Server, Prettier - Code formatter 확장 프로그램을 설치하세요.</li>
+            <li>기본 단축키를 연습해보세요.</li>
+          </ol>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h3>1.2 수업 전 알아 두기</h3>
+
+        <h4>웹 브라우저</h4>
+        <p>Chrome 사용을 권장합니다. 사용자 수가 가장 많고 개발자 도구가 가장 잘 되어 있습니다.</p>
+
+        <h4>확장 프로그램 (Chrome)</h4>
+        <ul>
+          <li><strong>HeadingsMap</strong>: 웹 페이지의 제목 태그들을 목차처럼 볼 수 있게 해줍니다.</li>
+          <li><strong>OpenWAX</strong>: 웹 페이지의 접근성을 진단하는 데 유용합니다.</li>
+        </ul>
+
+        <h4>폴더 및 파일 이름 규칙</h4>
+        <ul>
+          <li>
+            공백 없이 영문 소문자를 사용합니다. 이는 컴퓨터와 웹 서버가 대소문자를 구분하고, 공백 처리가 일관적이지 않아
+            발생할 수 있는 오류를 줄이기 위함입니다.
+          </li>
+          <li>
+            언더바(_) 대신 <strong>하이픈(-)</strong>을 사용하는 것이 좋습니다. Google 검색 엔진은 하이픈을 단어
+            구분자로 인식하여 SEO에 도움이 됩니다 (예: <code>lion-resting-on-the-road.png</code>).
+          </li>
+        </ul>
+
+        <h4>파일 경로</h4>
+        <ul>
+          <li>
+            <strong>상대경로</strong>: 현재 파일을 기준으로 하는 상대적인 경로입니다 (예: <code>./</code>,
+            <code>../</code>, <code>./폴더명/</code>).
+          </li>
+          <li>
+            <strong>절대경로</strong>: <code>http://</code>, <code>https://</code>로 시작하는 인터넷상의 고유한
+            경로(URL)를 의미합니다.
+          </li>
+        </ul>
+
+        <h4>개발자 도구</h4>
+        <p>
+          Chrome에서 F12 키를 눌러 열 수 있습니다. 웹 페이지의 HTML, CSS, JavaScript를 확인하고 수정하며, 네트워크, 콘솔
+          등의 탭을 통해 웹 페이지의 동작을 분석할 수 있습니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <h3>1.3 웹 Web 이란?</h3>
+
+        <div class="key-concept">
+          <h4>핵심 개념</h4>
+          <p><strong>웹(Web)</strong><span style="color: rgb(0, 0, 0);">은 인터넷을 기반으로 하는 수많은 서비스 중 하나로, HTTP 프로토콜을 사용하여 정보를 전송합니다.</span></p>
+        </div>
+
+        <h4>World Wide Web (WWW)</h4>
+        <p>전 세계적으로 분산된 수많은 문서와 리소스들이 서로 연결된 거대한 정보 네트워크입니다.</p>
+
+        <h4>웹 페이지</h4>
+        <p>일반적으로 HTML이라는 마크업 언어로 작성된 문서 형식으로 제공됩니다.</p>
+
+        <h4>웹의 기초 구성 요소</h4>
+        <ul>
+          <li><strong>HTML</strong>: 웹 콘텐츠의 의미와 구조를 정의합니다.</li>
+          <li><strong>CSS</strong>: 웹 페이지의 모양과 표현을 담당합니다.</li>
+          <li><strong>JavaScript</strong>: 웹 페이지의 기능과 동작을 담당합니다.</li>
+        </ul>
+
+        <h4>웹의 역사</h4>
+        <ul>
+          <li>
+            팀 버너스 리가 1990년에 초창기 웹 브라우저를, 1991년에 HTML을 개발했습니다. 초창기에는 약 20개의 태그만
+            지원하는 단순한 형태였습니다.
+          </li>
+          <li>1996년에 CSS가 등장하여 HTML을 꾸며주는 역할을 시작했습니다.</li>
+          <li>같은 해 JavaScript(초기 이름 Mocha)가 넷스케이프 네비게이터2에 탑재되며 발전했습니다.</li>
+        </ul>
+
+        <h4>인터넷(Web !== Internet)</h4>
+        <ul>
+          <li><strong>인터넷</strong>: 전 세계 컴퓨터와 기기들을 연결하는 거대한 네트워크(인프라)입니다.</li>
+          <li><strong>웹</strong>: 인터넷을 기반으로 한 수많은 서비스 중 하나입니다.</li>
+          <li>
+            <strong>HTTP (HyperText Transfer Protocol)</strong>: 웹은 이 프로토콜을 사용하여 정보를 전송하며, 이는
+            컴퓨터나 장치 간 데이터를 주고받는 전송 규칙을 의미합니다.
+          </li>
+        </ul>
+
+        <div class="note">
+          <h4>인터넷 위 다른 서비스</h4>
+          <p>
+            웹 외에도 이메일(SMTP/POP3/IMAP), FTP(파일 전송), SSH(원격 제어) 등 다양한 서비스들이 인터넷 위에 존재하며
+            각기 다른 프로토콜을 사용합니다.
+          </p>
+        </div>
+
+        <div class="summary">
+          <h4>1장 요약</h4>
+          <ul>
+            <li>VS Code는 가장 인기 있는 웹 개발 도구 중 하나입니다.</li>
+            <li>웹은 인터넷 위의 서비스 중 하나이며, HTTP 프로토콜을 사용합니다.</li>
+            <li>HTML5는 Living Standard로 지속적으로 개선되고 있습니다.</li>
+            <li>파일 이름과 경로 규칙을 지켜야 합니다.</li>
+          </ul>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h4>프론트엔드와 백엔드</h4>
+        <ul>
+          <li>
+            <strong>프론트엔드 개발자</strong>: 사용자 인터페이스(UI)를 다루며, HTML, CSS, JavaScript를 주력 언어로
+            사용합니다. React, Vue 등은 JavaScript 기반입니다.
+          </li>
+          <li>
+            <strong>백엔드 개발자</strong>: 사용자에게 보이지 않는 서버와 데이터 처리를 다룹니다. Python, Java, C 등
+            다양한 프로그래밍 언어와 웹 프레임워크를 사용하며, 프론트엔드의 동작 방식을 이해하는 것이 중요합니다.
+          </li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h3>1.4 HTML5</h3>
+
+        <h4>정의</h4>
+        <p>최신 웹 기술을 가리키는 용어로, 이전 버전인 HTML 4.01에 비해 다양한 새로운 기능과 요소를 포함합니다.</p>
+
+        <h4>Living Standard</h4>
+        <p>
+          2019년부터 WHATWG와 W3C는 Living Standard를 HTML의 유일한 표준으로 발표했습니다. 이는 버전 번호 없이 HTML
+          표준을 지속적으로 업데이트하고 발전시키는 방식을 의미합니다.
+        </p>
+
+        <div class="highlight">
+          <h4>&lt;!DOCTYPE html&gt;</h4>
+          <p>
+            이 선언문은 HTML Living Standard로 작성된 문서임을 브라우저에 알려주어, 페이지를 표준 모드로 렌더링하게
+            합니다. 과거의 복잡한 DTD(문서 유형 정의)와는 달리 간결해졌습니다.
+          </p>
+        </div>
+      </section>
+
+      <section id="preparation">
+      </section>
+    </section>
+
+    <section id="chapter2" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>HTML 문서의 기본 구조 이해</li>
+          <li>HTML 문법과 요소 간의 관계 학습</li>
+          <li>효율적인 코드 작성을 위한 스니펫과 Emmet 활용</li>
+        </ul>
+      </div>
+
+      <h2>2장 HTML</h2>
+
+      <section id="html-anatomy">
+        <h3>2.1 HTML 문서해부</h3>
+
+        <h4>index.html</h4>
+        <p>
+          웹 개발에서 웹사이트나 웹 애플리케이션의 진입점 또는 시작 페이지로 사용되는 특별한 파일명입니다. 웹 서버의
+          기본 설정과 개발 커뮤니티의 관례 때문입니다.
+        </p>
+
+        <div class="key-concept">
+          <h4>핵심 개념</h4>
+          <p><strong>&lt;!DOCTYPE html&gt;</strong><span style="color: rgb(0, 0, 0);">은 HTML5 문서를 선언하는 필수 태그로, 모든 HTML 파일의 첫 번째 줄에 작성해야 합니다.</span></p>
+        </div>
+
+        <h4>&lt;!DOCTYPE html&gt;</h4>
+        <p>HTML Living Standard 문서임을 선언하며, 브라우저가 완전 표준 모드로 렌더링하도록 합니다.</p>
+
+        <h4>&lt;html&gt;</h4>
+        <p>
+          HTML 문서의 루트(최상위) 태그입니다. 모든 HTML 요소는 이 태그 내에 포함되어야 하며, <code>lang</code> 속성으로
+          페이지의 주 언어를 설정합니다 (예: <code>lang="ko-KR"</code>).
+        </p>
+
+        <h4>&lt;head&gt;</h4>
+        <p>
+          문자 인코딩, 타이틀, 설명, 스타일시트, 스크립트 등 기계가 식별할 수 있는 문서 정보(메타데이터)를 담습니다.
+        </p>
+
+        <h5>주요 메타 태그들</h5>
+        <ul>
+          <li>
+            <code>&lt;meta charset="utf-8"&gt;</code>: 문자 깨짐 오류를 방지하고 전 세계 언어를 지원하는 문자 코드를
+            설정합니다.
+          </li>
+          <li>
+            <code>&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</code>: Internet Explorer 브라우저에서
+            최신 표준 모드로 페이지를 보여주도록 호환성을 위해 작성합니다.
+          </li>
+          <li>
+            <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>: 모바일 장치 등
+            다양한 디바이스에서 웹 페이지의 표시 방식을 제어합니다.
+          </li>
+          <li>
+            <code>&lt;title&gt;</code>: 브라우저의 제목 표시줄이나 페이지 탭에 보이는 문서 제목을 정의합니다. 검색
+            엔진이 페이지를 선택하는 중요한 정보이며, 약 60자를 넘지 않도록 하는 것이 좋습니다.
+          </li>
+          <li>
+            <code>&lt;link&gt;</code>: 현재 문서와 외부 리소스(스타일 시트, 폰트, 파비콘 등)의 관계를 명시하고
+            연결합니다.
+          </li>
+        </ul>
+
+        <h4>&lt;body&gt;</h4>
+        <p>사용자에게 실제로 보이는 영역으로, 웹 페이지의 모든 콘텐츠가 이곳에 작성됩니다.</p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="html-syntax">
+        <h3>2.2 HTML 기본 문법</h3>
+
+        <h4>요소(Elements)</h4>
+        <p>HTML을 구성하는 가장 기본적인 단위입니다.</p>
+
+        <h4>태그(Tag)</h4>
+        <p>
+          <code>&lt;&gt;</code>로 시작하는 시작 태그(여는 태그)와 <code>&lt;/&gt;</code>로 끝나는 종료 태그(닫는 태그)의
+          쌍으로 구성되며, 웹을 구성하는 각 요소의 역할을 정의합니다.
+        </p>
+
+        <h4>빈 요소</h4>
+        <p>
+          닫는 태그가 없는 요소들을 의미합니다 (예: <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>,
+          <code>&lt;input&gt;</code>). 현대 HTML에서는 /를 넣어서 닫아주지 않아도 됩니다.
+        </p>
+
+        <h4>주석</h4>
+        <p>
+          <code>&lt;!-- 주석 --&gt;</code> 형태로 작성하며, 프로그램 동작에 영향을 미치지 않습니다. 코드 설명을 달거나
+          특정 소스를 임시로 비활성화("주석 처리")하는 용도로 사용됩니다.
+        </p>
+
+        <div class="note">
+          <p>
+            가독성을 위해 최소한으로 남기고, 시맨틱 태그와 직관적인 클래스명으로 코드를 이해하기 쉽게 작성하는 것이
+            좋습니다.
+          </p>
+        </div>
+
+        <h4>태그의 관계</h4>
+        <ul>
+          <li>
+            <strong>부모(Parent) 요소</strong>: 다른 요소를 포함하는 요소입니다 (예: <code>&lt;section&gt;</code>은
+            <code>&lt;h1&gt;</code>의 부모).
+          </li>
+          <li>
+            <strong>자식(Child) 요소</strong>: 부모 요소 내부에 직접 포함된 요소입니다 (예: <code>&lt;h1&gt;</code>은
+            <code>&lt;section&gt;</code>의 자식).
+          </li>
+          <li><strong>형제(Sibling) 요소</strong>: 같은 부모 요소를 가지는 요소들입니다.</li>
+          <li>
+            <strong>자손(Descendant) 요소</strong>: 어떤 요소의 내부에 포함된 모든 요소를 말하며, 자식 요소뿐만 아니라
+            자식의 자식 요소까지 포함합니다.
+          </li>
+        </ul>
+
+        <div class="important">
+          <h5>요소 간 관계의 중요성</h5>
+          <p>
+            CSS 선택자를 사용하여 특정 요소를 선택하고 스타일을 적용할 때, 이러한 관계를 활용하여 더 정확하고 효율적으로
+            스타일을 지정할 수 있습니다 (예: <code>section p { color: blue; }</code>).
+          </p>
+        </div>
+
+        <div class="exercise">
+          <h4>실습: 기본 HTML 문서 작성하기</h4>
+          <ol>
+            <li>새 HTML 파일을 만들고 기본 구조를 작성해보세요.</li>
+            <li>&lt;head&gt; 안에 필수 메타 태그들을 추가해보세요.</li>
+            <li>&lt;body&gt; 안에 제목과 단락을 추가해보세요.</li>
+            <li>브라우저에서 결과를 확인해보세요.</li>
+          </ol>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="snippet">
+        <h3>2.3 스니펫 만들기</h3>
+
+        <h4>정의</h4>
+        <p>
+          자주 사용하는 코드 조각을 미리 저장해두고, 짧은 키워드(예: !!)를 입력한 후 탭(Tab) 키를 누르면 미리 정의된
+          전체 코드가 자동으로 삽입되는 기능입니다.
+        </p>
+
+        <h4>설정 방법 (VSCode)</h4>
+        <p>File &gt; Preferences &gt;&nbsp;Configure Snippets&nbsp;<span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">메뉴에서 html.json 파일을 선택하여 설정합니다.</span></p><h4 style="color: rgb(55, 65, 81);">snippet generator</h4><p>https://snippet-generator.app/</p>
+
+        <h4>활용</h4>
+        <p>
+          HTML 기본 구조, 함수 템플릿, 자주 쓰는 CSS 속성 세트 등 반복적인 코드 작성을 효율화할 수 있습니다.
+          <code>$1</code>, <code>$2</code> 등을 사용하여 탭으로 이동 가능한 커서 위치를 지정할 수 있습니다.
+        </p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="emmet">
+        <h3>2.4 Emmet 실습!</h3>
+        <p>
+          이 섹션은 Emmet 사용법에 대한 실습을 다루며, 코드를 더 빠르고 효율적으로 작성하는 방법을 익히는 과정입니다.
+        </p>
+
+        <div class="exercise">
+          <h4>실습: Emmet 문법 연습</h4>
+          <p>다음 Emmet 문법들을 연습해보세요:</p>
+          <ul>
+            <li><code>div&gt;ul&gt;li*5</code> - 리스트 구조 만들기</li>
+            <li><code>nav&gt;ul&gt;li*3&gt;a</code> - 네비게이션 메뉴 만들기</li>
+            <li><code>.container&gt;.row&gt;.col*3</code> - 그리드 레이아웃 만들기</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="summary">
+        <h4>2장 요약</h4>
+        <ul>
+          <li>HTML 문서는 DOCTYPE, html, head, body로 구성됩니다.</li>
+          <li>요소들은 부모-자식 관계를 가지며 중첩될 수 있습니다.</li>
+          <li>스니펫과 Emmet은 코드 작성 속도를 크게 향상시킵니다.</li>
+          <li>주석은 코드 설명과 임시 비활성화에 사용합니다.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="chapter3" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>HTML의 다양한 텍스트 관련 태그들의 사용법 이해</li>
+          <li>목록 태그의 종류와 활용 방법 학습</li>
+          <li>시맨틱한 마크업의 중요성과 적용 방법 이해</li>
+          <li>웹 접근성을 고려한 텍스트 구조화 능력 습득</li>
+        </ul>
+      </div>
+
+      <h2>3장 일단 글을 적어보자!</h2>
+
+        <div class="key-concept">
+          <h4>핵심 개념</h4>
+          <p><strong>텍스트 의미론적 마크업</strong><span style="color: rgb(0, 0, 0);">은 단순한 스타일링이 아닌 내용의 의미를 HTML로 표현하는 것입니다. 이는 접근성과 SEO에 핵심적인 역할을 합니다.</span></p>
+        </div>
+
+      <section id="text-tags">
+        <h3>3.1 텍스트와 관련된 태그들</h3>
+
+        <h4>&lt;h&gt; (제목 태그)</h4>
+        <p>
+          <code>&lt;h1&gt;</code>부터 <code>&lt;h6&gt;</code>까지 있으며, 웹 페이지의 논리 구조를 정의하고 중요한 내용을
+          나타냅니다. 숫자가 작을수록 크고 중요한 제목을 의미하며, 검색 엔진 최적화(SEO)와 스크린 리더 사용자에게 매우
+          중요합니다.
+        </p>
+
+        <div class="important">
+          <ul>
+            <li><code>&lt;h1&gt;</code> 태그는 한 페이지에 한 번만 사용하는 것을 권장합니다 (예: 웹사이트 로고).</li>
+            <li>스타일 목적으로 h 태그를 사용하지 않고, 항상 순서대로 작성해야 합니다.</li>
+          </ul>
+        </div>
+
+        <h4>&lt;a&gt; (하이퍼링크)</h4>
+        <p><code>href</code> 속성을 통해 연결할 URL을 지정하여 웹 페이지 간 이동을 가능하게 합니다.</p>
+
+        <h5>주요 속성</h5>
+        <ul>
+          <li>
+            <code>href</code> 속성값: 절대 URL, 상대 URL, 같은 페이지 내 요소 (#section1), tel:(전화 연결),
+            mailto:(이메일 연결) 등
+          </li>
+          <li>
+            <code>target</code> 속성: 링크가 열리는 위치를 지정하며, <code>_blank</code>(새 탭)가 가장 많이 사용됩니다.
+          </li>
+          <li><code>download</code> 속성: 링크 클릭 시 페이지 이동 대신 파일 다운로드를 수행합니다.</li>
+        </ul>
+
+        <p><code>&lt;a&gt;</code> 태그는 인라인 요소이지만, 예외적으로 블록 요소들을 감쌀 수 있습니다.</p>
+
+        <h4>&lt;p&gt; (문단)</h4>
+        <p>
+          paragraph의 약어로, 하나의 문단을 나타냅니다. 문단 사이에 자동으로 여백이 생기고, 검색 엔진이 내용을 더 잘
+          이해할 수 있도록 돕는 블록 요소입니다.
+        </p>
+
+        <h4>&lt;br&gt; (줄 바꿈)</h4>
+        <p>
+          break의 약어로, 줄을 나눕니다. 닫는 태그가 없으며, 오직 줄 바꿈 기능만 수행합니다. 여백을 위해 여러 번
+          사용하지 않도록 권장됩니다.
+        </p><h4 style="color: rgb(55, 65, 81);">&lt;wbr&gt;</h4><p>브라우저가 줄을 바꿀 수 있는 위치를 지정하는 방법입니다.</p><p></p><ul><li>한글의 경우는 CSS의 <strong>word-break:keep-all</strong> 속성과 함께 사용</li></ul><p></p>
+
+        <h4>강조 및 의미 태그들</h4>
+
+        <h5>&lt;strong&gt;</h5>
+        <p>
+          중대하거나 긴급한 콘텐츠를 나타내는 태그입니다. 기본적으로 굵은 글꼴이 적용되며, 스크린 리더는 거센 억양으로
+          발음하여 중요 정보를 강조합니다.
+        </p>
+
+        <h5>&lt;em&gt;</h5>
+        <p>
+          Emphasis의 약어로, 텍스트의 강세나 강조를 나타냅니다. 기울임 글꼴이 적용되며, 음성으로 읽을 때도 의미를
+          강조하여 전달합니다. 중첩하여 더 큰 강세를 나타낼 수 있습니다.
+        </p>
+
+        <div class="note">
+          <h5>주의사항</h5>
+          <p>
+            <code>&lt;b&gt;</code>와 <code>&lt;i&gt;</code>는 과거에 스타일 목적으로 사용되었으나, 의미론적이지 않으므로
+            사용하지 않는 것을 권장합니다. <strong>strong</strong>, <strong>em</strong> 등은 모두 스타일이 아닌
+            의미론적인 목적으로 사용해야 하며, 스타일은 CSS를 이용해야 합니다.
+          </p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h4>인용 관련 태그들</h4>
+
+        <h5>&lt;q&gt;</h5>
+        <p>
+          짧은 인용문에 사용되며, 브라우저가 자동으로 인용 부호를 추가합니다. <code>cite</code> 속성으로 출처 URL을
+          지정할 수 있습니다.
+        </p>
+
+        <h5>&lt;blockquote&gt;</h5>
+        <p>긴 인용문을 나타냅니다.</p>
+
+        <h5>&lt;cite&gt;</h5>
+        <p>저작물의 출처를 표기할 때 사용하며, 제목을 반드시 포함해야 합니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>기타 유용한 태그들</h4>
+
+        <ul>
+          <li><code>&lt;code&gt;</code>: 짧은 코드 조각이나 한 줄의 코드를 나타낼 때 사용</li>
+          <li><code>&lt;pre&gt;</code>: HTML에 작성한 내용 그대로(공백 유지)를 표현</li>
+          <li><code>&lt;mark&gt;</code>: 형광펜으로 칠한 것처럼 표시되는 하이라이트 텍스트</li>
+          <li><code>&lt;address&gt;</code>: 해당 콘텐츠에 대한 연락처 정보를 나타냄</li>
+          <li><code>&lt;abbr&gt;</code>: 줄임말이나 약어임을 표시할 때 사용</li>
+          <li><code>&lt;sup&gt;</code>: 위 첨자 요소</li>
+          <li><code>&lt;sub&gt;</code>: 아래 첨자 요소</li>
+          <li><code>&lt;kbd&gt;</code>: 키보드 입력을 나타냄</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="list-tags">
+        <h3>3.2 목록 관련 태그 ul,ol,dl</h3>
+
+        <h4>&lt;ol&gt; (ordered list)</h4>
+        <p>
+          순서가 있는 목록을 나타냅니다. 숫자나 문자를 이용해 항목이 정렬된 목록을 만들 때 사용되며, <code>type</code>,
+          <code>start</code>, <code>reversed</code> 등의 속성을 가질 수 있습니다 (예: 레시피 단계, 브레드크럼).
+        </p>
+
+        <h4>&lt;ul&gt; (unordered list)</h4>
+        <p>unordered list의 약자로, 순서가 중요하지 않은 비순차적 목록을 의미합니다 (일반적으로 불릿으로 표현).</p>
+
+        <div class="highlight">
+          <h5>ol vs ul</h5>
+          <p>
+            항목의 순서를 바꿨을 때 그 의미도 바뀐다면 <code>&lt;ol&gt;</code>, 그렇지 않고 순서가 중요하지 않다면
+            <code>&lt;ul&gt;</code>을 사용합니다.
+          </p>
+        </div>
+
+        <h4>&lt;li&gt; (list item)</h4>
+        <p>
+          목록의 항목을 나타냅니다. 단독으로 사용할 수 없으며, <code>&lt;ol&gt;</code> 또는 <code>&lt;ul&gt;</code>의
+          자식 요소로만 사용 가능합니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>&lt;dl&gt; (description list)</h4>
+        <p>용어와 그 설명을 짝지어 표현하는 설명 목록을 나타냅니다. 사전처럼 체계적으로 정보를 정리할 때 유용합니다.</p>
+
+        <h5>구성 요소</h5>
+        <ul>
+          <li><code>&lt;dl&gt;</code>: 전체 목록 컨테이너</li>
+          <li><code>&lt;dt&gt;</code>: 정의될 용어</li>
+          <li><code>&lt;dd&gt;</code>: 용어에 대한 설명</li>
+        </ul>
+        <div class="exercise">
+          <h4>실습: 의미론적 마크업 연습</h4>
+          <ol>
+            <li>뉴스 기사를 작성하되, 제목, 부제목, 본문, 인용문을 적절한 태그로 마크업해보세요.</li>
+            <li>강조가 필요한 부분은 &lt;strong&gt;과 &lt;em&gt; 태그를 사용해보세요.</li>
+            <li>순서가 있는 레시피와 순서가 없는 재료 목록을 각각 작성해보세요.</li>
+            <li>용어 사전을 &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt; 태그로 작성해보세요.</li>
+          </ol>
+        </div>
+
+        <div class="quiz">
+          <h4>퀴즈: 텍스트와 목록 태그</h4>
+          <ol>
+            <li><strong>&lt;strong&gt;과 &lt;b&gt; 태그의 차이점은?</strong>
+              <ul>
+                <li>A) 시각적 차이만 있다</li>
+                <li>B) &lt;strong&gt;은 의미론적, &lt;b&gt;는 시각적 목적 ✓</li>
+                <li>C) 완전히 같다</li>
+              </ul>
+            </li>
+            <li><strong>언제 &lt;ol&gt; 대신 &lt;ul&gt;을 사용해야 할까요?</strong>
+              <ul>
+                <li>A) 항목 순서가 중요하지 않을 때 ✓</li>
+                <li>B) 항목이 3개 이하일 때</li>
+                <li>C) 숫자가 필요 없을 때</li>
+              </ul>
+            </li>
+            <li><strong>&lt;dl&gt; 태그의 올바른 사용 예는?</strong>
+              <ul>
+                <li>A) 순서가 있는 목록</li>
+                <li>B) 용어와 정의 쌍 ✓</li>
+                <li>C) 단순 텍스트 나열</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="summary">
+          <h4>3장 요약</h4>
+          <ul>
+            <li>HTML 텍스트 태그는 의미론적 마크업을 위해 사용해야 합니다.</li>
+            <li>&lt;h1&gt;~&lt;h6&gt;는 문서 구조를 정의하며 SEO와 접근성에 중요합니다.</li>
+            <li>&lt;strong&gt;과 &lt;em&gt;은 단순한 스타일링이 아닌 의미 강조를 위해 사용합니다.</li>
+            <li>목록 태그(&lt;ul&gt;, &lt;ol&gt;, &lt;dl&gt;)는 정보의 성격에 맞게 선택해야 합니다.</li>
+            <li>웹 접근성을 위해 alt 텍스트와 적절한 태그 선택이 필수입니다.</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <section id="chapter4" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>블록 레벨 요소와 인라인 요소의 차이점과 특성 이해</li>
+          <li>HTML5 콘텐츠 카테고리 시스템의 개념과 구조 학습</li>
+          <li>요소 간의 포함 관계와 제약사항 파악</li>
+          <li>적절한 HTML 구조 설계 능력 습득</li>
+        </ul>
+      </div>
+
+      <h2>4장 어떤 태그는 줄바꿈이 되고 어떤 것은 안될까?</h2>
+
+      <section id="block-inline">
+        <h3>4.1 블록 레벨 요소 vs 인라인 요소</h3>
+
+        <div class="key-concept">
+          <h4>핵심 개념</h4>
+          <p><strong>블록 레벨 요소</strong><span style="color: rgb(0, 0, 0);">는 새로운 줄에서 시작하여 전체 너비를 차지하며, </span><strong>인라인 요소</strong><span style="color: rgb(0, 0, 0);">는 텍스트 흐름에 따라 배치되고 콘텐츠만큼의 공간만 차지합니다.</span></p>
+        </div>
+
+        <div class="note">
+          <p>
+            <strong>참고:</strong> 블록 레벨과 인라인 요소의 분류는 HTML 4.01까지 사용되었으며, 현재 HTML 표준에서는
+            콘텐츠 카테고리 집합으로 대체되었습니다.
+          </p>
+        </div>
+
+        <h4>&lt;div&gt; (블록 컨테이너)</h4>
+        <p>
+          division의 약자로, 웹 페이지의 레이아웃을 만들고 콘텐츠를 분할하는 블록 레벨 컨테이너입니다. 영역을 구분
+          짓거나 무리를 지을 때 사용됩니다.
+        </p>
+
+        <div class="important">
+          <p>
+            스타일 적용을 위한 용도로 사용하는 것을 권장하며, SEO, 코드 가독성, 접근성을 위해 시맨틱 태그를 우선적으로
+            사용해야 합니다.
+          </p>
+        </div>
+
+        <h4>&lt;span&gt; (인라인 컨테이너)</h4>
+        <p>
+          인라인 컨테이너로, 스타일을 적용하거나 인라인 요소를 묶는 데 사용됩니다. 본질적으로는 아무런 의미를 나타내지
+          않습니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>블록 요소 (Block-level elements)</h4>
+        <ul>
+          <li>부모 요소의 전체 공간을 차지하며 새로운 줄에서 시작하고, 가능한 모든 너비를 차지합니다.</li>
+          <li>이전/이후 요소 사이에 줄 바꿈이 일어납니다.</li>
+          <li>페이지의 구조적 요소를 나타낼 때 사용됩니다.</li>
+          <li>
+            인라인 요소를 포함할 수 있지만, 인라인 요소 안에 중첩될 수는 없습니다 (예외: <code>&lt;a&gt;</code> 태그는
+            블록 요소를 중첩할 수 있습니다).
+          </li>
+          <li>
+            <code>width</code>, <code>height</code> 크기를 지정할 수 있으며, <code>padding</code>, <code>border</code>,
+            <code>margin</code> 속성 사용이 가능합니다.
+          </li>
+        </ul>
+
+        <h5>대표적인 블록 요소</h5>
+        <p>
+          <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>~<code>&lt;h6&gt;</code>,
+          <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>,
+          <code>&lt;article&gt;</code>, <code>&lt;nav&gt;</code> 등
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>인라인 요소 (Inline elements)</h4>
+        <ul>
+          <li>항상 블록 레벨 요소 내에 포함되며, 콘텐츠의 흐름을 끊지 않고 콘텐츠에 따라 할당된 공간만 차지합니다.</li>
+          <li>새로운 줄을 만들지 않습니다.</li>
+          <li>
+            <code>width</code>, <code>height</code> 크기를 지정할 수 없으며, <code>margin</code> 속성 중 상하 간격은
+            적용되지 않습니다 (<code>padding</code>, <code>border</code>는 적용 가능).
+          </li>
+        </ul>
+
+        <h5>대표적인 인라인 요소</h5>
+        <p><code>&lt;a&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code> 등</p>
+
+        <div class="page-break"></div>
+
+        <h4>인라인-블록 요소 (Inline-block elements)</h4>
+        <ul>
+          <li>인라인 요소처럼 전후 줄 바꿈 없이 한 줄에 다른 요소들과 나란히 배치됩니다.</li>
+          <li>
+            블록 요소처럼 너비와 높이 지정 및 <code>margin</code>, <code>padding</code> 상하 간격 지정이 가능합니다.
+          </li>
+        </ul>
+
+        <h5>대표적인 요소</h5>
+        <p><code>button</code>, <code>input</code>, <code>select</code></p>
+
+        <div class="page-break"></div>
+
+        <h3>4.2 콘텐츠 카테고리 (HTML5)</h3>
+
+        <h4>플로우 콘텐츠 (Flow Content)</h4>
+        <p>
+          대부분의 HTML 요소를 포함하며, 웹 문서에서 일반적으로 사용하는 콘텐츠입니다 (예: <code>&lt;div&gt;</code>,
+          <code>&lt;p&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;header&gt;</code>,
+          <code>&lt;article&gt;</code>).
+        </p>
+
+        <h4>대화형 콘텐츠 (Interactive Content)</h4>
+        <p>
+          사용자가 상호작용할 수 있는 요소들입니다 (예: <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code>,
+          <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;details&gt;</code>,
+          <code>&lt;label&gt;</code>).
+        </p>
+
+        <h4>구획 콘텐츠 (Sectioning Content)</h4>
+        <p>
+          문서의 구조를 정의하고 섹션을 나누는 데 사용됩니다 (예: <code>&lt;article&gt;</code>,
+          <code>&lt;aside&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>,
+          <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>).
+        </p>
+
+        <h4>제목 콘텐츠 (Heading Content)</h4>
+        <p>섹션의 제목을 정의합니다 (예: <code>&lt;h1&gt;</code>~<code>&lt;h6&gt;</code>).</p>
+
+        <h4>구문 콘텐츠 (Phrasing Content)</h4>
+        <p>
+          텍스트와 인라인 요소를 포함하며, 텍스트의 의미와 구조를 정의합니다 (예: <code>&lt;span&gt;</code>,
+          <code>&lt;a&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;img&gt;</code>,
+          <code>&lt;code&gt;</code>, <code>&lt;time&gt;</code>).
+        </p>
+
+        <h4>내장 콘텐츠 (Embedded Content)</h4>
+        <p>
+          외부 소스의 콘텐츠를 포함합니다 (예: <code>&lt;img&gt;</code>, <code>&lt;audio&gt;</code>,
+          <code>&lt;video&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;source&gt;</code>,
+          <code>&lt;track&gt;</code>).
+        </p>
+
+        <h4>메타데이터 콘텐츠 (Metadata Content)</h4>
+        <p>
+          문서의 메타데이터를 정의하는 요소들입니다. 주로 <code>&lt;head&gt;</code> 요소 내에 위치합니다 (예:
+          <code>&lt;base&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;title&gt;</code>).
+        </p>
+      </section>
+
+      <section id="content-categories">
+      </section>
+    </section>
+
+    <section id="chapter5" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>HTML에서 이미지를 삽입하는 방법과 img 태그의 속성 이해</li>
+          <li>웹 접근성을 고려한 대체 텍스트(alt) 작성법 학습</li>
+          <li>이미지 맵과 피규어 태그의 활용 방법 습득</li>
+          <li>실제 웹페이지에 이미지를 효과적으로 활용하는 방법 학습</li>
+        </ul>
+      </div>
+
+      <h2>5장 이미지도 넣어보자!</h2>
+
+      <section id="img-tag">
+        <h3>5.1 이미지 img</h3>
+
+        <h4>&lt;img&gt; 태그</h4>
+        <p>
+          HTML 문서에 이미지를 삽입하는 데 사용됩니다. 과거에는 이미지를 보려면 링크를 클릭해야 했지만,
+          <code>&lt;img&gt;</code> 태그 덕분에 글자와 이미지를 한 번에 볼 수 있게 되었습니다.
+        </p>
+
+        <h4>주요 속성</h4>
+
+        <h5>src 속성</h5>
+        <p>이미지 파일의 경로를 지정합니다.</p>
+
+        <h5>alt 속성 (대체 텍스트)</h5>
+        <p>
+          src에 지정한 이미지를 제대로 불러오지 못했을 때 이미지 대신 표시되는 텍스트입니다. 시각장애인을 위한 스크린
+          리더를 지원하며, 이미지가 단순히 페이지를 꾸미는 용도라면 <code>alt=""</code>와 같이 빈 값으로 둡니다.
+        </p>
+
+        <h5>title 속성</h5>
+        <p>
+          이미지에 대한 추가 정보를 제공하는 텍스트로, 마우스를 이미지 위에 올리면 툴팁으로 표시됩니다. alt 속성을
+          대체할 수 없으며, alt와 동일하거나 부연 설명으로 사용하지 않는 것이 좋습니다.
+        </p>
+
+        <div class="highlight">
+          <h4>이미지 파일명</h4>
+          <p>
+            Google을 포함한 대부분의 검색 엔진은 이미지 검색 순위 결정 시 이미지 파일명을 중요한 요소로 활용하므로,
+            이미지 내용을 설명하는 파일 이름 (예: <code>flower.jpg</code> 대신 <code>img234235.png</code>)을 사용하는
+            것이 좋습니다.
+          </p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h4>관련 태그들</h4>
+
+        <h5>&lt;map&gt;, &lt;area&gt; 태그</h5>
+        <ul>
+          <li><code>&lt;map&gt;</code>: 이미지 맵을 정의하는 태그입니다.</li>
+          <li><code>&lt;area&gt;</code>: 이미지 맵 내에서 클릭 가능한 영역을 정의하는 태그입니다.</li>
+        </ul>
+
+        <h5>&lt;figure&gt;, &lt;figcaption&gt; 태그</h5>
+        <ul>
+          <li>
+            <code>&lt;figure&gt;</code>: 문서의 주요 흐름과 독립적으로 참조될 수 있는 자체 완결적인 콘텐츠
+            블록(일러스트레이션, 다이어그램, 사진, 코드 목록 등)을 나타냅니다.
+          </li>
+          <li>
+            <code>&lt;figcaption&gt;</code>: <code>&lt;figure&gt;</code> 요소에 대한 캡션(설명)을 추가할 때 사용합니다.
+          </li>
+        </ul>
+      </section>
+
+      <section id="about-me">
+        <div class="page-break"></div>
+
+        <h3>5.2 about me 페이지 만들기</h3>
+        <p>이 섹션은 지금까지 배운 HTML 태그를 활용하여 간단한 'about me' 페이지를 직접 만들어보는 실습 과정입니다.</p></section></section><section class="page-break"><section><ul><li><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">스타일, 이미지는 첨부하지 않으셔도 됩니다 (AI를 활용해서 생성 후 추가해보셔도 괜찮습니다)</span></li><li>지금까지 배운 html 태그를 최대한 많이 사용해봅시다.</li></ul>
+      </section>
+    </section>
+
+    <section id="chapter6" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>웹 접근성의 중요성과 구현 방법 이해</li>
+          <li>웹 레이아웃 기술의 발전 과정과 역사 학습</li>
+          <li>HTML5 시맨틱 요소들의 의미와 올바른 사용법 습득</li>
+          <li>접근성을 고려한 마크업 구조 설계 능력 배양</li>
+        </ul>
+      </div>
+
+      <h2>6장 어떻게 배치하면 좋을까?</h2>
+
+      <section id="accessibility">
+        <h3>6.1 웹 접근성</h3>
+
+        <h4>정의</h4>
+        <p>어떠한 사용자(장애인, 고령자 등)이던지 웹에서 제공하는 모든 정보에 접근할 수 있도록 보장하는 것입니다.</p>
+
+        <h4>웹의 힘</h4>
+        <p>
+          웹의 창시자 팀 버너스 리 경은 "웹의 힘은 그것의 보편성에 있다. 장애에 구애 없이 모든 사람이 접근할 수 있는
+          것이 필수적인 요소이다."라고 강조했습니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>중요성</h4>
+        <ul>
+          <li>약 13억 명(전 세계 6명 중 1명)이 심각한 장애를 경험합니다.</li>
+          <li>장애로 인한 건강 불평등, 낙인, 차별 등을 해소하기 위한 노력의 일환입니다.</li>
+          <li>
+            <strong>법적 근거:</strong> 장애인차별금지법에 따라 웹 접근성을 준수해야 하며, 위반 시 시정 권고, 과태료,
+            민/형사 고발이 가능합니다.
+          </li>
+        </ul>
+
+        <h4>정보에 접근하는 다양한 방법</h4>
+        <ul>
+          <li><strong>시각 장애 (전맹):</strong> 스크린 리더, 점자 정보 단말기</li>
+          <li><strong>시각 장애 (저시력):</strong> 화면 확대, 색 전환(흑백/고대비)</li>
+          <li><strong>신체적 장애:</strong> 헤드 포인터, 빅키 키보드, 트랙볼 마우스 등 특수 보조 기기</li>
+        </ul>
+
+        <h4>WCAG (Web Content Accessibility Guidelines)</h4>
+        <p>
+          W3C에서 제시한 웹 콘텐츠 접근성 가이드라인 표준으로, 장애가 있는 사용자가 웹을 더 쉽게 이용할 수 있도록
+          준수해야 하는 지침입니다.
+        </p>
+
+        <h5>4가지 핵심 원칙</h5>
+        <ol>
+          <li><strong>인식 가능(Perceivable):</strong> 모든 사용자가 서비스 콘텐츠를 인식할 수 있어야 합니다.</li>
+          <li>
+            <strong>운용 가능(Operable):</strong> 모든 사용자가 서비스의 기능을 운용할 수 있어야 합니다 (예: 마우스
+            없이도 이용 가능).
+          </li>
+          <li>
+            <strong>이해 가능(Understandable):</strong> 모든 사용자가 서비스의 콘텐츠, 기능 사용법 등을 이해하기 쉬워야
+            합니다.
+          </li>
+          <li>
+            <strong>견고(Robust):</strong> 사용자가 이용하는 모든 기기 및 브라우저에서 접근, 사용 가능해야 합니다.
+          </li>
+        </ol>
+
+        <div class="page-break"></div>
+
+        <h5>WCAG 규정 준수 수준</h5>
+        <ul>
+          <li><strong>A 레벨 (최소 준수):</strong> 웹사이트 접근성을 본질적으로 불가능하게 만드는 요소를 금지</li>
+          <li>
+            <strong>AA 레벨 (허용 가능한 보편적 규정 준수):</strong> 전 세계 대부분의 접근성 규칙 및 규정에서 사용되며,
+            대다수의 장애인이 사용하고 이해할 수 있음
+          </li>
+          <li>
+            <strong>AAA 레벨 (최적의 규정 준수):</strong> 거의 모든 사용자가 사이트의 모든 기능을 경험하는 이상적인 수준
+          </li>
+        </ul>
+
+        <h4>간단한 접근성 확인법</h4>
+        <ul>
+          <li><strong>탭(Tab) 버튼으로 탐색:</strong> 모든 버튼, 앵커, 인풋 요소가 탭으로 탐색 가능한지 확인</li>
+          <li><strong>포커싱 확인:</strong> 포커싱된 요소에 명확한 시각적 표시가 있어야 합니다</li>
+          <li>
+            <strong>호버 스타일 확인:</strong> 색상 변화만으로 호버를 표현하지 말고, 밑줄이나 테두리 스타일 등 직접적인
+            변화를 주어 저시력/색맹 사용자를 배려
+          </li>
+          <li><strong>접근성 관련 툴 사용:</strong> Lighthouse, Siteimprove Accessibility Checker 등</li>
+        </ul><div><h4 style="color: rgb(55, 65, 81);">웹 접근성을 위한 HTML 작성 원칙</h4><h4><b><span style="white-space:pre">	</span><span style="font-size: 16px;">1. 시맨틱(Semantic) 태그 사용하기</span></b></h4><p></p><p><span style="white-space:pre">	</span>HTML5의 시맨틱 태그는 각 요소의 의미를 명확히 합니다. 이는 스크린 리더가 웹 페이지의 구조를 이해하고&nbsp;<span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">사용자에게 <span style="white-space:pre">	</span>내용을 효과적으로 전달하는 데 필수적입니다.</span></p><ul><li><p><b>잘못된 예시:</b></p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-146 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-146 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQrAM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-146 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-146 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-146"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-146"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-146"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-146"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"nav"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre><!----><!----><!----></div></div></div><!----><!----><!----></code-block><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></response-element></li><li><p><b>올바른 예시:</b></p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-147 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-147 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQrQM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-147 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-147 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-147"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-147"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-147"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-147"><span class="hljs-tag">&lt;<span class="hljs-name">header</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">nav</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">main</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">main</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">footer</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">footer</span>&gt;</span>
+</code></pre><!----><!----><!----></div></div></div><!----><!----><!----></code-block><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></response-element><p><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code> 등의 태그는 그 자체로 의미를 담고 있어 스크린 리더가 '여기는 웹 페이지의 주요 콘텐츠 영역이구나'라고 인식할 수 있게 해줍니다.</p></li></ul></div><div><div><h4><b><span style="white-space:pre">	</span><span style="font-size: 16px;">2. </span><span style="font-size: 16px;">이미지에 대체 텍스트</span><span style="font-size: 16px;">(alt) 제공하기</span></b></h4><p></p><p><code style="color: rgb(31, 41, 55);"><span style="white-space:pre">	</span>&lt;img&gt;</code><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;"> 태그에는 반드시 </span><code style="color: rgb(31, 41, 55);">alt</code><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;"> 속성을 포함하여 이미지를 보지 못하는 사용자에게 이미지의 내용을 설명해야 합니</span><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">다.</span></p><ul><li><p><b>정보를 제공하는 이미지:</b> 이미지의 내용을 구체적으로 설명합니다.</p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-148 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-148 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQrgM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-148 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-148 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-148"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-148"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-148"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-148"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"flower.jpg"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"푸른 하늘 아래 핀 붉은 장미"</span>&gt;</span>
+</code></pre><!----><!----><!----></div></div></div><!----><!----><!----></code-block><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></response-element></li><li><p><b>장식용 이미지:</b> 내용 전달에 필요 없는 이미지는 <code>alt=""</code>로 비워두면 스크린 리더가 이를 건너뜁니다.</p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-149 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-149 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQrwM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-149 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-149 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-149"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-149"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-149"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-149"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"divider.png"</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">""</span>&gt;</span></code></pre></div></div></div></code-block></response-element></li></ul></div><div><h4><b><span style="white-space:pre">	</span><span style="font-size: 16px;">3. 폼 컨트롤에 레이블(label) 연결하기</span></b></h4><p></p><code style="color: rgb(31, 41, 55);"><span style="white-space:pre">	</span>&lt;input&gt;</code><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">, </span><code style="color: rgb(31, 41, 55);">&lt;textarea&gt;</code><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;"> 같은 폼 요소는 </span><code style="color: rgb(31, 41, 55);">&lt;label&gt;</code><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;"> 태그와 연결해야 합니다. 이는 스크린 리더가 폼의 용도를 사용자</span><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">에게 정확히 알려주고, 사용자가 레이블을 클릭하여 입력 칸을 활성화할 수 있게 합니다.</span><ul><li><p><b>잘못된 예시:</b></p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-150 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-150 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQsAM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-150 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-150 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-150"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-150"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-150"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-150">아이디
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span>&gt;</span>
+</code></pre><!----><!----><!----></div></div></div><!----><!----><!----></code-block><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></response-element></li><li><p><b>올바른 예시:</b></p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-151 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-151 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQsQM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-151 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-151 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-151"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-151"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-151"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-151"><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"username"</span>&gt;</span>아이디<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"username"</span>&gt;</span>
+</code></pre><!----><!----><!----></div></div></div><!----><!----><!----></code-block><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></response-element><p><code>for</code> 속성과 <code>id</code> 속성을 연결하여 두 요소가 서로 관련 있음을 명시합니다.</p></li></ul><div><h4><b><span style="white-space:pre">	</span><span style="font-size: 16px;">4. 제목 태그(h1~h6)를 구조적으로 사용하기</span></b></h4><p></p><p><span style="white-space:pre">	</span>제목 태그는 콘텐츠의 계층을 나타내야 합니다. <code>&lt;h1&gt;</code>은 페이지의 가장 중요한 제목에 단 한 번만 사용하고, 그 외의 제목은 순서대로 <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code> 등을 사용해야 합니다.  이는 책의 목차와 같이 웹 페이지의 논리적 흐름을 구성합니다.</p><ul><li><p><b>잘못된 예시:</b></p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-152 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-152 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQsgM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-152 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-152 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-152"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-152"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-152"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-152"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>메인 제목<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>소제목<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>다른 소제목<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+</code></pre><!----><!----><!----></div></div></div><!----><!----><!----></code-block><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></response-element></li><li><p><b>올바른 예시:</b></p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-153 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-153 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQswM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-153 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-153 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-153"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-153"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-153"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-153"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>메인 제목<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>대분류<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>중분류<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>소분류<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span></code></pre></div></div></div></code-block></response-element></li></ul><p></p><h4><b><span style="white-space:pre">	</span><span style="font-size: 16px;">5. 링크와 버튼을 명확하게 구분하기</span></b></h4><p></p><ul><li><p><b>링크(&lt;a&gt;):</b> 페이지 이동 등 <b>탐색</b>의 용도로 사용합니다. 링크 텍스트는 '여기를 클릭' 대신 '자세한 내용 보기', '문의하기'와 같이 목적을 명확히 설명해야 합니다.</p></li><li><p><b>버튼(&lt;button&gt;):</b> 폼 제출, 팝업 열기 등 <b>특정 동작</b>을 수행할 때 사용합니다.</p></li></ul><p></p><h4><b><span style="white-space:pre">	</span><span style="font-size: 16px;">6. 문서의 언어 설정하기</span></b></h4><p></p><p><span style="white-space:pre">	</span>HTML 문서의 언어를 <code>&lt;html&gt;</code> 태그에 <code>lang</code> 속성으로 지정하면, 스크린 리더가 해당 언어에 맞춰 발음하여 사용자에게 정확한 정보를 전달할 수 있습니다.</p><response-element class="" ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c3517561265="" class="ng-tns-c3517561265-154 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="code-block ng-tns-c3517561265-154 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_2609663470e757da&quot;,&quot;c_42be21d98aebfa17&quot;,null,&quot;rc_cabd26b6e3585498&quot;,null,null,&quot;ko&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjyoc_u796PAxUAAAAAHQAAAAAQtAM"><div _ngcontent-ng-c3517561265="" class="code-block-decoration header-formatted gds-title-s ng-tns-c3517561265-154 ng-star-inserted"><div _ngcontent-ng-c3517561265="" class="buttons ng-tns-c3517561265-154 ng-star-inserted"><!----><!----></div><!----></div><!----><div _ngcontent-ng-c3517561265="" class="formatted-code-block-internal-container ng-tns-c3517561265-154"><div _ngcontent-ng-c3517561265="" class="animated-opacity ng-tns-c3517561265-154"><pre _ngcontent-ng-c3517561265="" class="ng-tns-c3517561265-154"><code _ngcontent-ng-c3517561265="" role="text" data-test-id="code-content" class="code-container formatted ng-tns-c3517561265-154"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"ko"</span>&gt;</span>
+...
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre></div></div></div></code-block></response-element></div></div><b style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;"></b></div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="layout-history">
+        <h3>6.2 Layout History</h3>
+
+        <ol>
+          <li><strong>단순한 텍스트의 나열:</strong> 웹 초창기에는 레이아웃 도구가 없어 텍스트 정렬만 가능했습니다.</li>
+
+          <li>
+            <strong>테이블로 레이아웃 구성:</strong> <code>&lt;table&gt;</code> 태그를 표 데이터 본래의 목적과 다르게 웹
+            페이지 배치를 위해 사용했습니다. (현재도 뉴스레터 제작 등에서 사용)
+          </li>
+
+          <li>
+            <strong>프레임으로 레이아웃 구성:</strong> <code>&lt;iframe&gt;</code> 태그를 사용하여 여러 HTML 페이지를 한
+            페이지에 결합하여 레이아웃을 만들었습니다.
+          </li>
+
+          <li>
+            <strong>&lt;div&gt; 사용:</strong> <code>&lt;div&gt;</code> 태그와 CSS의 Box Model, float, position 속성
+            등을 이용하여 레이아웃을 만들던 시기입니다. 여러 브라우저별 표준이 정의되지 않아 다양한 기법이 난무했습니다.
+          </li>
+
+          <li>
+            <strong>시맨틱 마크업, Flex, Grid:</strong> 다양한 웹 기술 발전, 검색 엔진 최적화(SEO), 접근성, 반응형 웹
+            등의 이유로 생겨난 최신 레이아웃 기법입니다.
+          </li>
+        </ol>
+
+        <div class="highlight">
+          <h4>시맨틱 마크업의 중요성</h4>
+          <ul>
+            <li><strong>SEO (검색 엔진 최적화):</strong> 검색 엔진이 페이지의 콘텐츠를 더 잘 이해하게 돕습니다</li>
+            <li><strong>장애가 있는 사용자:</strong> 페이지 탐색 시 푯말 역할로 웹 접근성을 향상시킵니다</li>
+            <li><strong>가독성 및 유지보수 용이:</strong> 태그의 의미가 명확하여 코드를 읽고 관리하기 쉽습니다</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="semantic-elements">
+        <h3>6.3 Semantic Elements (시맨틱 요소)</h3>
+
+        <h4>목적</h4>
+        <p>
+          인터넷 정보들을 컴퓨터가 이해하고 가공할 수 있도록 하고, 웹 접근성을 향상시켜 정보 격차를 해소하는 것이
+          목적입니다.
+        </p>
+
+        <h4>&lt;header&gt;</h4>
+        <p>
+          소개 및 탐색에 도움을 주는 콘텐츠를 담습니다 (회사명, 제목, 로고, 검색 폼, 작성자 이름 등). HTML 문서가 여러
+          섹션으로 구성될 때 각 섹션의 시작 부분에 사용할 수 있습니다.
+        </p>
+
+        <div class="note">
+          <ul>
+            <li><code>&lt;head&gt;</code> 태그와 혼동하지 않도록 주의해야 합니다</li>
+            <li>헤더를 중첩 사용하거나 헤더 안에 푸터를 사용할 수 없습니다</li>
+          </ul>
+        </div>
+
+        <h4>&lt;nav&gt;</h4>
+        <p>
+          navigation bar의 약자로, 현재 페이지 내 또는 다른 페이지로의 링크를 보여줍니다. 내부에는 메뉴, 목차,
+          브레드크럼(Breadcrumb) 등이 포함됩니다. 하나의 웹 페이지에 여러 개의 <code>&lt;nav&gt;</code> 태그를 가질 수
+          있습니다.
+        </p>
+
+        <h4>&lt;footer&gt;</h4>
+        <p>페이지의 작성자, 저작권 정보, 페이지 관련 문서 등의 내용을 담습니다.</p>
+
+        <h4>&lt;main&gt;</h4>
+        <p>
+          <code>&lt;body&gt;</code>의 주요 콘텐츠를 나타냅니다. 웹 페이지에서 한 번만 사용할 수 있으며, 사이드바, 탐색
+          링크 등 반복되는 콘텐츠를 포함해서는 안 됩니다 (검색 폼이 주요 기능이라면 예외).
+        </p>
+
+        <h4>&lt;article&gt;</h4>
+        <p>
+          독립적으로 구분하여 배포하거나 재사용할 수 있는 콘텐츠 블록을 나타냅니다 (블로그 포스트, 뉴스 기사, 사용자
+          댓글, 위젯 등). 사이트의 다른 기능에 영향을 주지 않고 독립적인 기능을 수행하며, 제목 요소를 자식으로
+          포함해야 합니다.
+        </p>
+
+        <h4>&lt;section&gt;</h4>
+        <p>
+          문서 내에서 특정한 섹션을 정의하는 데 사용됩니다. 일반적으로 주제나 콘텐츠를 구분하기 위해 사용되며, 제목
+          요소를 자식으로 포함해야 합니다 (예: 뉴스의 사회면 / 연예면).
+        </p>
+
+        <div class="highlight">
+          <h5>&lt;article&gt; vs &lt;section&gt;</h5>
+          <p>
+            독립적으로 사용 가능하다면 <code>&lt;article&gt;</code>을 우선 고려하고, 웹 페이지의 앞뒤 문맥에 연결성이
+            필요하거나 더 적합한 의미 요소가 없을 때 <code>&lt;section&gt;</code>을 사용합니다. 단순 스타일링
+            목적이라면 <code>&lt;div&gt;</code>를 사용합니다.
+          </p>
+        </div>
+
+        <h4>&lt;aside&gt;</h4>
+        <p>
+          문서의 주요 내용과 간접적으로 연관된 부분을 나타냅니다. 문서의 주요 흐름을 따라가지 않고, 보조적인 역할만
+          하는 공간입니다 (예: 광고 배너, 사이드바).
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>&lt;hr&gt;</h4>
+        <p>
+          이야기에서 장면 전환 혹은 문단 안에서 주제가 변경되었을 때 사용합니다. 단락을 구분할 때 사용하므로
+          <code>&lt;p&gt;</code> 태그 내의 사용은 지양합니다.
+        </p>
+      </section>
+    </section>
+
+    <section id="chapter7" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>HTML 테이블의 구조와 접근성을 고려한 표 작성법 학습</li>
+          <li>비디오, 오디오 등 멀티미디어 콘텐츠 삽입과 제어 방법 이해</li>
+          <li>iframe을 통한 외부 콘텐츠 포함 기법과 주의사항 파악</li>
+          <li>SVG와 Canvas의 차이점 및 활용 방법 학습</li>
+          <li>사용자 입력을 받는 다양한 폼 요소들의 활용법 습득</li>
+          <li>웹 표준을 준수한 다양한 HTML 요소들의 올바른 사용법 이해</li>
+        </ul>
+      </div>
+
+      <h2>7장 웹페이지에 다양한 컨텐츠를 넣고 싶어!</h2>
+
+      <section id="table">
+        <h3>7.1 표(table)</h3>
+
+        <h4>&lt;table&gt;</h4>
+        <p>테이블을 생성할 때 사용하며, 테이블 데이터의 컨테이너 요소입니다.</p>
+
+        <h4>&lt;tr&gt;</h4>
+        <p>table row의 약자로, 테이블의 행을 정의합니다.</p>
+
+        <h4>&lt;td&gt;</h4>
+        <p>table data의 약자로, 테이블 셀의 내용을 나타냅니다.</p>
+
+        <h4>&lt;th&gt;</h4>
+        <p>table header의 약자로, 테이블의 행 또는 열의 제목을 나타내는 셀입니다.</p>
+
+        <h5>주요 속성</h5>
+        <ul>
+          <li>
+            <strong>scope 속성:</strong> <code>&lt;th&gt;</code> 태그에 사용하여 헤더가 어떤 셀에 대한 제목 셀인지
+            명확하게 지정합니다 (col, row, colgroup, rowgroup 값)
+          </li>
+          <li>
+            <strong>colspan, rowspan 속성:</strong> 셀을 병합할 때 사용하며, 각각 열 병합과 행 병합을 의미합니다
+          </li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>추가 테이블 요소들</h4>
+        <ul>
+          <li>
+            <code>&lt;caption&gt;</code>: 테이블의 제목이나 설명을 의미하며, <code>&lt;table&gt;</code>의 첫 번째
+            자식으로 사용
+          </li>
+          <li><code>&lt;thead&gt;</code>: 테이블의 머리글 구역</li>
+          <li><code>&lt;tbody&gt;</code>: 테이블의 본문 구역</li>
+          <li><code>&lt;tfoot&gt;</code>: 테이블의 바닥글 구역</li>
+          <li><code>&lt;colgroup&gt;</code>과 <code>&lt;col&gt;</code>: 테이블 열 단위 스타일 지정</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="media">
+        <h3>7.2 video &amp; audio</h3>
+
+        <h4>&lt;video&gt;</h4>
+        <p>웹 페이지에 동영상을 삽입할 때 사용합니다. 과거의 플래시 플레이어를 대체하여 발전했습니다.</p>
+
+        <h5>주요 속성</h5>
+        <ul>
+          <li><code>src</code>: 동영상 주소</li>
+          <li><code>controls</code>: 재생/정지 조작 메뉴</li>
+          <li><code>autoplay</code>: 자동 재생</li>
+          <li><code>muted</code>: 음소거</li>
+          <li><code>loop</code>: 반복 재생</li>
+          <li><code>poster</code>: 재생 전 이미지</li>
+          <li><code>preload</code>: 미리 로드 방식</li>
+        </ul>
+
+        <h4>&lt;audio&gt;</h4>
+        <p>웹 페이지에 오디오 콘텐츠를 포함할 때 사용합니다. MP3, WAV, Ogg가 공식적으로 지원하는 표준 오디오 파일입니다.</p>
+
+        <h4>&lt;source&gt;</h4>
+        <p>
+          <code>&lt;video&gt;</code> 또는 <code>&lt;audio&gt;</code> 태그 내에서 여러 미디어 파일을 지정하여, 브라우저가
+          지원하는 형식을 선택하여 재생할 수 있도록 합니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <div class="important">
+          <p>
+            <strong>autoplay (자동 재생)</strong>는 사용자의 의도와 달리 갑작스러운 소리나 영상 재생으로 불쾌감을 줄 수
+            있으므로, 가능한 한 지양하는 것이 좋습니다.
+          </p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="iframe">
+        <h3>7.3 iframe</h3>
+
+        <h4>&lt;iframe&gt; (inline frame)</h4>
+        <p>현재 웹 페이지에 다른 HTML 페이지를 포함시켜 중첩하는 기능을 제공합니다.</p>
+
+        <h5>주요 속성</h5>
+        <ul>
+          <li><code>src</code>: 삽입될 문서 주소</li>
+          <li><code>width</code>, <code>height</code>: 너비/높이</li>
+          <li><code>scrolling</code>: 스크롤바 유무</li>
+          <li><code>allow</code>: 허용할 기능</li>
+        </ul>
+
+        <div class="note">
+          <h5>주의 사항</h5>
+          <ul>
+            <li>일부 사이트에서는 보안상의 이유로 <code>&lt;iframe&gt;</code> 포함을 거부할 수 있습니다</li>
+            <li>
+              성능 향상을 위해서는 메인 콘텐츠가 완전히 로딩된 후 JavaScript로 <code>src</code> 속성을 설정하는 것이
+              좋습니다
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="svg-canvas">
+        <h3>7.4 SVG, Canvas</h3>
+
+        <h4>SVG (Scalable Vector Graphics)</h4>
+        <p>
+          XML 기반의 2차원 그래픽으로, 픽셀이 아닌 수학적 경로와 도형으로 이미지를 표현합니다. 어떤 크기로 확대해도
+          품질이 유지되는 확장 가능한 벡터 그래픽입니다.
+        </p>
+
+        <h5>장점</h5>
+        <ul>
+          <li>확장성 (어떤 해상도에서도 선명)</li>
+          <li>CSS/JavaScript로 편집 가능</li>
+          <li>접근성 (텍스트 정보 포함)</li>
+          <li>SEO 친화적</li>
+          <li>단순한 도형의 경우 파일 크기가 작음</li>
+        </ul>
+
+        <h5>사용 방법</h5>
+        <ul>
+          <li>외부 파일로 사용 (<code>&lt;img&gt;</code> 태그)</li>
+          <li>CSS background 배경으로 넣기</li>
+          <li>인라인으로 넣기 (완전 제어 가능)</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>Canvas</h4>
+        <p>
+          JavaScript와 HTML 요소를 통해 그래픽을 그리는 데 사용됩니다. 픽셀 기반의 비트맵 방식이며, 그래픽 작업이 주인
+          게임이나 애니메이션에 적합합니다.
+        </p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="form">
+        <h3>7.5 양식(form)</h3>
+
+        <h4>form</h4>
+        <p>
+          사용자로부터 입력을 받기 위한 양식을 작성하는 태그들을 통틀어 form이라고 합니다. 입력한 데이터를 제출, 전송할
+          필요가 없다면 form 태그를 사용하지 않아도 됩니다.
+        </p>
+
+        <h5>주요 속성</h5>
+        <ul>
+          <li>
+            <strong>method 속성:</strong> GET (URL에 데이터 첨부, 보안 취약) / POST (별도 첨부, 보안성 높음)
+          </li>
+          <li>
+            <strong>enctype 속성:</strong> application/x-www-form-urlencoded (기본) / multipart/form-data (파일 업로드)
+          </li>
+          <li><strong>action 속성:</strong> 양식 데이터를 처리할 프로그램의 URL</li>
+          <li><strong>autocomplete 속성:</strong> 브라우저의 자동 완성 기능 제어 (on/off)</li>
+        </ul>
+
+        <h4>input</h4>
+        <p>사용자로부터 다양한 유형의 데이터를 입력받는 양식 컨트롤입니다.</p>
+
+        <h5>공통 속성</h5>
+        <ul>
+          <li><code>type</code>: 컨트롤 유형</li>
+          <li><code>name</code>: 컨트롤 이름</li>
+          <li><code>value</code>: 컨트롤 값</li>
+          <li><code>placeholder</code>: 입력 힌트</li>
+          <li><code>required</code>: 필수 입력</li>
+          <li><code>disabled</code>: 비활성화</li>
+          <li><code>readonly</code>: 읽기 전용</li>
+        </ul>
+
+        <h4>label</h4>
+        <p>
+          사용자 인터페이스의 항목을 나타냅니다. input과 함께 사용하여 스크린 리더 사용자가 입력해야 하는 내용을 쉽게
+          이해할 수 있게 하며, label을 클릭하여 input에 포커스를 이동시킬 수 있습니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>기타 form 요소들</h4>
+        <ul>
+          <li><code>&lt;select&gt;</code>: 옵션 메뉴를 제공하는 드롭다운 목록</li>
+          <li><code>&lt;option&gt;</code>: select 메뉴의 각 옵션을 정의</li>
+          <li><code>&lt;optgroup&gt;</code>: option 요소들을 그룹으로 묶음</li>
+          <li><code>&lt;fieldset&gt;</code>: 다양한 선택 항목을 그룹화</li>
+          <li><code>&lt;legend&gt;</code>: fieldset의 제목을 제공</li>
+          <li><code>&lt;datalist&gt;</code>: input 요소에 미리 정의된 옵션 목록 제공</li>
+          <li><code>&lt;textarea&gt;</code>: 여러 줄의 텍스트를 입력받음</li>
+          <li><code>&lt;button&gt;</code>: 사용자가 클릭하여 상호작용할 수 있는 요소</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="other-tags">
+        <h3>7.6 그 외 다양한 태그들</h3>
+
+        <h4>&lt;meter&gt;</h4>
+        <p>특정 범위 내에서의 값을 시각적으로 표시하는 게이지입니다 (예: 투표 결과, 디스크 사용량).</p>
+
+        <h4>&lt;progress&gt;</h4>
+        <p>작업의 진행 상황을 나타낼 때 사용됩니다 (예: 파일 업로드, 다운로드 완료 비율).</p>
+
+        <h4>&lt;dialog&gt;</h4>
+        <p>
+          대화 상자나 모달 창 같은 대화형 컴포넌트를 만드는 데 사용됩니다. JavaScript로 표시하거나 숨길 수 있으며,
+          기본적인 접근성 기능이 내장되어 있습니다.
+        </p>
+
+        <h4>&lt;template&gt;</h4>
+        <p>
+          재사용 가능한 HTML 코드 블록을 정의할 수 있는 태그입니다. 초기에는 렌더링되지 않지만, JavaScript를 통해
+          복제하여 사용할 수 있습니다.
+        </p>
+
+        <h4>&lt;details&gt;, &lt;summary&gt;</h4>
+        <p>사용자 클릭으로 정보를 보여주고 숨기는 토글 UI를 제공합니다.</p>
+
+        <h4>&lt;picture&gt;</h4>
+        <p>
+          장치나 환경에 따라 각기 다른 버전의 이미지를 표시할 수 있습니다. 반응형 디자인과 페이지 로딩 속도 향상에
+          기여합니다.
+        </p>
+
+        <h4>&lt;output&gt;</h4>
+        <p>계산 결과나 사용자 동작의 결과를 나타낼 때 사용됩니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>&lt;time&gt;</h4>
+        <p>
+          특정 시간 또는 날짜를 시맨틱하게 나타내는 데 사용됩니다. <code>datetime</code> 속성으로 기계가 읽을 수 있는
+          형식의 날짜/시간을 지정할 수 있습니다.
+        </p>
+      </section>
+    </section>
+
+    <section id="chapter8" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>SEO(검색엔진 최적화)의 개념과 중요성 이해</li>
+          <li>웹사이트 검색 순위 향상을 위한 핵심 기법 학습</li>
+          <li>HTML 메타 태그와 구조적 마크업의 SEO 역할 파악</li>
+          <li>오픈 그래프 프로토콜과 소셜 미디어 최적화 방법 습득</li>
+          <li>성능 측정 도구 활용법과 모바일 퍼스트 인덱싱 이해</li>
+        </ul>
+      </div>
+
+      <h2>8장 검색도 잘되게 해보자</h2>
+
+      <section id="seo">
+        <h3>8.1 검색엔진 최적화(SEO)</h3>
+
+        <h4>검색 엔진</h4>
+        <p>웹이나 컴퓨터 시스템에 저장된 정보를 찾아주는 프로그램을 의미합니다 (예: Google, Naver, Daum).</p>
+
+        <h4>검색 엔진 최적화 (SEO)</h4>
+        <p>
+          우리가 제작한 웹사이트가 다양한 검색 엔진 결과 페이지에 얼마나 빠르고 상위에 노출되는가를 개선하는 방법을 모아
+          웹사이트에 적용하는 것을 검색 엔진 최적화라고 합니다.
+        </p>
+
+        <h4>SEO의 중요성</h4>
+        <ul>
+          <li><strong>트래픽 증가:</strong> 웹사이트의 가시성을 높여 더 많은 사용자를 유입시킵니다</li>
+          <li><strong>신뢰성 구축:</strong> 검색 결과 상위에 노출됨으로써 사용자들에게 신뢰를 줍니다</li>
+          <li><strong>비용 효율성:</strong> 유료 광고에 비해 장기적으로 더 비용 효율적인 마케팅 전략</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>SEO 가이드</h4>
+
+        <h5>URL</h5>
+        <ul>
+          <li>언더바(_) 사용 금지, 단어 구분은 하이픈(-) 사용</li><ul><li>ex) lion_resting_on_the_road.png vs lion-resting-on-the-road.png</li></ul>
+          <li>최대한 짧지만 해당 페이지를 유추할 수 있는 단어로 구성</li>
+          <li>depth는 2-4 정도, 6 이하를 권장</li><ul><li>https://example.com/depth1/depth2/depth3/depth4/</li></ul>
+          <li>대표 URL 설정 (canonical 캐노니컬 태그)</li><ul><li>&lt;link rel="canonical" href="https://example.com/" /&gt;</li></ul>
+        </ul>
+
+        <h5>정확한 페이지 제목 (&lt;title&gt; 태그)</h5>
+        <ul>
+          <li>검색 엔진에 페이지의 주제가 무엇인지 명확히 알려줍니다</li>
+          <li>각 페이지에 고유한 제목을 사용</li>
+          <li>약 50-60자를 넘지 않아야 합니다</li>
+        </ul>
+
+        <h5>메타 태그 (&lt;meta&gt;)</h5>
+        <ul>
+          <li>
+            <strong>description:</strong> 페이지의 요약본으로, 검색 결과에서 제목 아래에 나타나는 설명 텍스트 (약
+            150-160자 길이 제한)</li>
+            
+        <pre><code>&lt;meta 
+  name="description" 
+  content="HTML과 CSS를 체계적으로 학습할 수 있는 종합 강의 자료입니다." 
+/&gt;</code></pre>
+        </ul>
+
+        <h5>오픈 그래프 프로토콜 (Open Graph Protocol)</h5>
+        <p>2010년 Facebook에서 개발한 메타데이터 표준으로, 웹페이지가 소셜 미디어에서 공유될 때 어떻게 표시될지를 제어하는 프로토콜입니다.</p><pre style="background-color: rgb(243, 244, 246); border-color: rgb(229, 231, 235); border-style: solid; border-width: 1px; border-image: none 100% / 1 / 0 stretch;"><code style="color: rgb(31, 41, 55); transition-property: all;">&lt;!-- 핵심 오픈 그래프 태그들 --&gt;
+&lt;meta property="og:title" content="페이지 제목" /&gt;
+&lt;meta property="og:type" content="컨텐츠 타입" /&gt;
+&lt;meta property="og:url" content="페이지 주소" /&gt;
+&lt;meta property="og:image" content="페이지 썸네일 이미지 주소" /&gt;
+&lt;meta property="og:description" content="페이지 설명" /&gt;</code></pre>
+
+        <h5>마크업</h5>
+        <ul>
+          <li>웹 표준 규약 준수</li>
+          <li><strong>제목 태그 (&lt;h1&gt; ~ &lt;h6&gt;)</strong>를 사용하여 중요한 텍스트를 강조</li>
+          <li><strong>&lt;img&gt; 태그에 대체 텍스트 (alt 속성)</strong>를 넣습니다</li>
+          <li>&lt;strong&gt;, &lt;em&gt; 등을 사용하여 키워드를 강조</li>
+          <li>의미 있는 링크 텍스트를 작성</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <div class="page-break"></div>
+
+        <h5 style="color: rgb(17, 24, 39);">robot.txt</h5><p></p><ul><li>사이트에서 크롤러가 액세스할 수 있는 파일을 제어</li><li>사이트의 루트에 위치</li></ul><p></p><h5 style="color: rgb(17, 24, 39);">sitemap.xml</h5><p></p><ul><li>검색엔진에게 사이트 내 모든 페이지 목록을 제공하여 크롤링되고 색인 될수 있게 도와줍니다.</li></ul><p></p><h4>성능 및 품질 측정</h4>
+
+        <h5>모바일 퍼스트 인덱싱</h5>
+        <p>
+          2021년 3월부터 Google은 모든 웹사이트에 대해 모바일 버전을 기준으로 색인을 생성하고 순위를 결정합니다.</p></section></section><section class="page-break"><section><ul><li><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">모바일 페이지의 콘텐츠가 데스크톱과 동일해야 함</span></li><li>모바일에서도 모든 중요한 콘텐츠가 접근 가능해야 함</li><li>구조화된 데이터도 모바일 페이지에 포함되어야 함</li></ul>
+
+        <h5>Lighthouse</h5>
+        <p>
+          웹페이지 품질 개선을 위해 제공되는 자동 검사 도구입니다. 성능, 접근성, 프로그레시브 웹 앱 호환성 등에 대한
+          검사를 실행하여 사이트 품질 개선에 도움을 줍니다.
+        </p>
+      </section>
+    </section>
+
+    <section id="chapter9" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>CSS의 개념과 역사 이해</li>
+          <li>CSS 적용 방법들의 특징과 활용법 학습</li>
+          <li>CSS 상속 개념 이해와 활용</li>
+        </ul>
+      </div>
+
+      <h2>9장 CSS</h2>
+
+      <section id="css-basic">
+        <h3>9.1 CSS 기본</h3>
+
+        <h4>정의</h4>
+        <p>
+          우리가 작성한 HTML의 스타일과 레이아웃 등을 꾸미는 언어입니다. HTML과 마찬가지로 프로그래밍 언어는 아니지만 웹
+          개발에서 중요한 역할을 합니다.
+        </p>
+
+        <h4>CSS 등장 배경</h4>
+        <p>
+          1990년대 초반, 초기의 HTML은 문서 구조 정의에만 사용되었고 스타일링 기능이 거의 없었습니다. 개발자들이 HTML
+          태그 내에 직접 스타일 속성을 삽입하는 방식은 코드를 복잡하게 만들고 유지보수를 어렵게 했습니다.
+        </p>
+
+        <h4>CSS의 탄생</h4>
+        <p>
+          1994년 하콘 비움 리가 스타일 시트 개념을 제안했고, 1996년 12월 W3C에 의해 최초의 CSS(Cascading Style Sheets)
+          표준으로 공식화되었습니다.
+        </p>
+
+        <div class="page-break"></div>
+
+        <h4>CSS의 장점</h4>
+        <ul>
+          <li>
+            <strong>구조와 스타일의 분리:</strong> HTML은 콘텐츠와 구조, CSS는 스타일과 레이아웃을 정의하여 문서의
+            구조적 의미를 명확히 하고 유지보수성을 높입니다
+          </li>
+          <li>
+            <strong>일관된 디자인 유지:</strong> 여러 페이지에 동일한 스타일을 쉽게 적용할 수 있어 웹사이트 전체의
+            일관된 디자인을 유지합니다
+          </li>
+          <li>
+            <strong>재사용성 및 효율성 향상:</strong> 스타일 시트를 한 번 작성하면 여러 문서에서 재사용할 수 있어 개발
+            시간을 단축하고 코드 중복을 줄입니다
+          </li>
+        </ul>
+
+        <h4>Cascading의 의미</h4>
+        <p></p><span style="line-height: 1.4;">CSS는 <strong>Cascading Style Sheets</strong>의 약자입니다. 이는 <strong>Cascading</strong>한 속성을 가진 스타일 문서임을 나타냅니다.&nbsp;&nbsp;</span></section><section id="css-basic"><span style="line-height: 1.4;">그렇다면&nbsp;&nbsp;</span><strong style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif; color: rgb(17, 24, 39);">Cascading</strong><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">은 어떤 의미를 가지고 있을까요?</span></section><section id="css-basic"><strong style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">Cascading</strong><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">은 연속적인 이라는 뜻을 가지며 cascade는 폭포를 의미합니다.&nbsp;</span></section><section id="css-basic"><span style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">CSS에서 스타일이 적용될 때 우선순위를 가지고 적용되는데, 이 과정이 마치 폭포처럼 위에서 아래로 떨어지는
+          모양이기 때문에 <strong>Cascading</strong>이라는 단어가 붙었습니다.</span></section><section id="css-basic">
+
+        <h4>기본 문법</h4>
+        <p>
+          선택자(Selector) { <strong>속성(Property)</strong> : <strong>속성값(Property Value)</strong> ; } 형태로
+          구성됩니다.
+        </p>
+
+        <div class="note">
+          <h5>Can I Use</h5>
+          <p>
+            CSS 속성의 브라우저 호환성을 한눈에 확인할 수 있는 필수 도구입니다. 새로운 CSS 기능을 사용하기 전에
+            호환성을 항상 체크하는 습관을 들이는 것이 좋습니다.
+          </p>
+        </div>
+
+        <div class="key-concept">
+          <h4>핵심 개념</h4>
+          <p><strong>CSS의 Cascading</strong><span style="color: rgb(0, 0, 0);">은 스타일이 우선순위에 따라 위에서 아래로 떨어지는 폭포처럼 적용되는 것에서 유래된 이름입니다.</span></p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="css-apply">
+        <h3>9.2 CSS 적용하기</h3>
+
+        <h4>1. 인라인 방식 (Inline Styles)</h4>
+        <p>HTML 태그의 style 속성에 직접 스타일을 지정하는 방식입니다.</p>
+        <p>
+          소규모 테스트에 유용하지만, 코드 가독성이 떨어지고 CSS의 가상 클래스나 가상 요소에 스타일을 줄 수 없어
+          일반적인 실무에서는 권장되지 않습니다.
+        </p>
+
+        <h4>2. 내부 스타일 (Internal Styles)</h4>
+        <p>HTML 문서의 <code>&lt;head&gt;</code> 요소 안에서 <code>&lt;style&gt;</code> 태그를 사용하여 스타일을 정의하는 방식입니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>3. 외부 스타일 (External Styles)</h4>
+        <p>HTML 파일에 별도의 .css 확장자를 가진 외부 CSS 파일을 연결하는 방식입니다.</p>
+
+        <ul>
+          <li><code>&lt;link&gt;</code> 태그를 사용하여 <code>&lt;head&gt;</code> 요소 내부에 연결</li>
+          <li><strong>rel:</strong> 외부 리소스와의 관계를 나타내며, 스타일 파일의 경우 stylesheet를 값으로 가짐</li>
+          <li><strong>href:</strong> 참조할 CSS 파일의 위치를 나타냄</li>
+        </ul>
+
+        <div class="highlight">
+          <p>
+            실무에서 가장 많이 사용되는 방법으로, HTML과 CSS를 분리하여 코드의 가독성, 효율성, 유지보수성을 높입니다.
+          </p>
+        </div>
+
+        <div class="exercise">
+          <h4>실습: CSS 적용 방법 비교</h4>
+          <ol>
+            <li>동일한 스타일을 인라인, 내부, 외부 방식으로 적용해보세요.</li>
+            <li>각 방식의 장단점을 비교해보세요.</li>
+            <li>언제 어떤 방식을 사용할지 결정해보세요.</li>
+          </ol>
+        </div>
+
+        <h4>4. 다중 스타일 시트</h4>
+
+        <h5>기본 (여러 &lt;link&gt; 태그 사용)</h5>
+        <p>여러 link 태그를 사용하여 CSS 파일을 연결할 수 있으며, 나중에 작성된 스타일이 앞서 작성된 스타일을 덮어쓸 수 있으므로 순서가 중요합니다.</p>
+
+        <h5>CSS 파일 안에 CSS 포함 (@import 구문)</h5>
+        <p>CSS 파일 내에서 <code>@import url('파일경로');</code> 구문을 사용하여 다른 CSS 파일들을 포함할 수 있습니다.</p>
+
+        <div class="important">
+          <p>
+            <strong>성능 측면:</strong> <code>&lt;link&gt;</code> 태그가 더 효율적입니다. <code>&lt;link&gt;</code>는
+            병렬 다운로드가 가능하지만, <code>@import</code>는 순차적으로 다운로드하여 렌더링 속도가 느려질 수
+            있습니다.
+          </p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="css-inheritance">
+        <h3>9.3 CSS 상속</h3>
+
+        <h4>상속(Inheritance)</h4>
+        <p>
+          부모 요소에 적용된 스타일 속성이 자식 요소에게 전달되는 메커니즘을 말합니다. 이는 HTML 문서의 계층 구조를 따라
+          스타일이 "흘러내리는" 방식으로 적용되어 전체적인 디자인의 일관성을 유지하고 코드 중복을 줄이는 데 도움이
+          됩니다.
+        </p>
+
+        <h4>상속되는 속성 vs 비상속 속성</h4>
+        <ul>
+          <li>
+            <strong>상속되는 속성:</strong> 일반적으로 텍스트 관련 속성들(color, font-family, font-size, text-align
+            등)
+          </li>
+          <li>
+            <strong>비상속 속성:</strong> 레이아웃 관련 속성들(width, height, margin, padding, border, background
+            등)
+          </li>
+        </ul>
+
+        <h4>우선순위</h4>
+        <p>명시적으로 작성된 자식 요소의 속성값이 부모로부터 상속받은 속성값보다 우선순위가 높게 적용됩니다.</p>
+
+        <h4>상속 제어 속성</h4>
+        <ul>
+          <li><strong>inherit:</strong> 선택한 요소에 적용된 속성값을 부모와 동일하게 상속받게 합니다</li>
+          <li><strong>initial:</strong> 요소의 모든 속성을 각 속성의 초기값으로 변경합니다</li>
+          <li>
+            <strong>unset:</strong> 해당 속성이 자연적으로 상속되는 속성이면 inherit처럼, 아니면 initial처럼 작동합니다
+          </li>
+          <li><strong>revert:</strong> 스타일 규칙이 없었을 때 적용되었을 상태로 복구합니다</li>
+        </ul>
+
+        <div class="note">
+          <p>
+            <code>all</code> 속성에 inherit, initial, unset, revert 값을 지정하여 모든 기존 스타일에 대한 상속 방식을
+            제어할 수 있습니다.
+          </p>
+        </div>
+      </section>
+
+      <div class="summary">
+        <h4>9장 요약</h4>
+        <ul>
+          <li>CSS는 HTML과 스타일을 분리하여 웹사이트의 디자인을 담당합니다.</li>
+          <li>외부 CSS 파일 연결이 가장 권장되는 방법입니다.</li>
+          <li>CSS 상속은 부모의 스타일이 자식에게 전달되는 메커니즘입니다.</li>
+          <li>Cascading은 우선순위에 따라 스타일이 적용되는 방식을 의미합니다.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="chapter10" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>CSS 선택자의 기본 개념과 종류 이해</li>
+          <li>복합 선택자와 우선순위 규칙 학습</li>
+          <li>효율적인 CSS 네이밍 규칙과 방법론 습득</li>
+          <li>선택자 우선순위 계산과 활용법 마스터</li>
+        </ul>
+      </div>
+
+      <h2>10장 CSS 선택자</h2>
+
+      <section id="selector-basic">
+        <h3>10.1 선택자 기초</h3>
+
+        <h4>전체 선택자 (*)</h4>
+        <p>HTML 문서 내의 모든 요소를 선택합니다.</p>
+        <ul>
+          <li>브라우저마다 다른 사용자 에이전트 스타일의 기본 스타일을 제거하는 데 주로 사용됩니다</li>
+          <li>페이지 로드 성능에 영향을 미칠 수 있으므로 필요한 경우에만 사용하는 것이 좋습니다</li>
+          <li>예: <code>* { margin: 0; padding: 0; }</code></li>
+        </ul>
+
+        <h4>타입(유형) 선택자 (&lt;태그명&gt;)</h4>
+        <p>특정 태그를 선택하여 스타일을 적용합니다 (예: h1, p).</p>
+        <ul>
+          <li>동일한 태그이면 모두 스타일이 적용되므로, 공통 스타일을 적용하는 데 사용됩니다</li>
+          <li>세부 스타일에는 클래스나 아이디 선택자를 사용하는 것을 권장합니다</li>
+        </ul>
+
+        <h4>아이디 선택자 (#)</h4>
+        <p>아이디를 사용하여 특정 요소를 선택합니다.</p>
+        <ul>
+          <li>아이디는 HTML 페이지 내에서 고유한 값을 가지므로, 한 개의 요소에만 스타일을 적용합니다</li>
+          <li>재사용성이 떨어지며, 주로 자바스크립트 기능을 추가하거나 해시 링크 이동에 사용됩니다</li>
+          <li><strong>스타일링을 위해 id 선택자를 사용하지 않는 것이 좋습니다.</strong> CSS 우선순위가 높아 변경 및 덮어쓰기가 어렵습니다</li>
+          <li>숫자로 시작할 수 없습니다 (예: <code>#1id</code> (X), <code>#id1</code> (O))</li>
+        </ul>
+
+        <h4>클래스 선택자 (.)</h4>
+        <p>클래스를 사용하여 요소를 선택합니다.</p>
+        <ul>
+          <li>하나의 요소에 여러 개의 클래스를 적용할 수 있으며, 스타일을 세분화하고 추가하는 데 유연합니다</li>
+          <li><strong>스타일 적용 시 가장 바람직한 방법으로 권장됩니다</strong></li>
+          <li>숫자로 시작할 수 없습니다 (예: <code>.1class</code> (X), <code>.class1</code> (O))</li>
+          <li>하이픈 (-), 언더바 (_), 문자로만 시작할 수 있습니다</li>
+        </ul>
+
+        <h4>속성 선택자 ([])</h4>
+        <p>HTML 요소의 속성을 기반으로 요소를 선택합니다.</p>
+        <p>예: <code>[속성이름]</code>, <code>[속성이름="속성값"]</code>, <code>[속성이름*="속성값"]</code></p>
+
+        <h4>그룹 선택자 (,)</h4>
+        <p>여러 개의 선택자를 쉼표(,)로 구분하여 한 번에 동일한 스타일을 적용합니다.</p>
+        <p>코드 중복을 줄이고 스타일 일관성을 유지하는 데 유용합니다.</p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="complex-selectors">
+        <h3>10.2 복합 선택자</h3>
+
+        <p>CSS 복합 선택자는 여러 선택자를 조합하여 더 구체적으로 요소를 선택합니다.</p>
+
+        <h4>자손 선택자 (공백)</h4>
+        <p>특정 요소의 모든 하위 요소를 선택합니다.</p>
+        <p>예: <code>div p</code> (div 요소 내의 모든 p 요소 선택)</p>
+
+        <h4>자식 선택자 (&gt;)</h4>
+        <p>특정 요소의 직계 자식 요소만 선택합니다.</p>
+        <p>예: <code>ul &gt; li</code> (ul 요소의 직계 자식인 li 요소만 선택)</p>
+
+        <h4>일반 형제 선택자 (~)</h4>
+        <p>선택자 뒤에 나오는 모든 형제 요소를 선택합니다.</p>
+        <p>예: <code>p ~ span</code> (p 요소 뒤에 나오는 모든 span 형제 요소 선택)</p>
+
+        <h4>인접 형제 선택자 (+)</h4>
+        <p>선택자 바로 뒤에 인접한 형제 요소만 선택합니다.</p>
+        <p>예: <code>h1 + p</code> (h1 요소 바로 뒤에 인접한 p 형제 요소 선택)</p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="selector-priority">
+        <h3>10.3 선택자 우선순위</h3>
+
+        <p>여러 스타일이 충돌할 때 어떤 스타일을 적용할지 결정하는 규칙을 선택자 우선순위라고 합니다.</p>
+        <p>크게 세 가지 원칙을 따릅니다:</p>
+        <ol>
+          <li>후자 우선의 원칙</li>
+          <li>구체성(명시도)의 원칙</li>
+          <li>중요성의 원칙</li>
+        </ol>
+
+        <h4>1. 후자 우선의 원칙</h4>
+        <p>동일한 선택자에 동일한 속성이 여러 번 정의될 경우, 가장 마지막에 정의된 스타일이 적용됩니다.</p>
+        <p>예: <code>p { color: blue; } p { color: red; }</code> → 빨간색 적용</p>
+
+        <h4>2. 구체성(명시도, Specificity)의 원칙</h4>
+        <p>선택자가 얼마나 구체적으로 요소를 지정하는지를 나타냅니다. 더 구체적인 선택자가 우선순위가 높습니다.</p>
+
+        <div class="page-break"></div>
+
+        <h5>가중치 계산 방법</h5>
+        <ul>
+          <li><strong>inline-style:</strong> 1000점</li>
+          <li><strong>id (#):</strong> 100점</li>
+          <li><strong>class (.), 속성 선택자, 가상 클래스:</strong> 10점</li>
+          <li><strong>타입 선택자, 가상요소 선택자:</strong> 1점</li>
+          <li><strong>전체 선택자 (*):</strong> 0점</li>
+        </ul>
+
+        <div class="important">
+          <p>
+            <strong>중요:</strong> 유형 선택자의 가중치는 클래스 선택자보다 우선될 수 없습니다. 클래스의 가중치를 먼저 비교하고, 다음으로 유형 선택자의 가중치를 비교합니다.
+          </p>
+        </div>
+
+        <h4>3. 중요성의 원칙 (!important)</h4>
+        <p><code>!important</code> 선언은 다른 모든 선언보다 최우선합니다.</p>
+        
+        <div class="important">
+          <p>
+            매우 강력한 도구이지만 남용하면 CSS의 예측 가능성과 유지보수성을 해칠 수 있어 좋지 못한 습관으로 간주됩니다. 
+            제한적인 상황 (외부 라이브러리 CSS 재정의, 유틸리티 클래스 강제 적용)에만 권장됩니다.
+          </p>
+        </div>
+
+        <h4>스타일의 우선순위 적용 순서</h4>
+        <ol>
+          <li><strong>중요성의 원칙:</strong> !important가 있는 선언 우선</li>
+          <li><strong>구체성의 원칙:</strong> 더 구체적인 선택자가 우선</li>
+          <li><strong>후자 우선의 원칙:</strong> 같은 구체성을 가진 경우 나중에 선언된 스타일이 우선</li>
+        </ol>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="naming-rules">
+        <h3>10.4 네이밍 규칙</h3>
+
+        <h4>이름 짓기(네이밍)의 중요성</h4>
+        <p>프로그래머들이 가장 힘들어하는 일 중 49%를 차지할 정도로 중요합니다.</p>
+        <ul>
+          <li>코드의 가독성을 높이고, 유지보수를 쉽게 만들며, 팀원 간의 협업을 원활하게 합니다</li>
+          <li>프로젝트가 커질수록, 여러 개발자가 함께 작업할수록 체계적인 네이밍 규칙은 프로젝트 성공에 직접적인 영향을 미칩니다</li>
+        </ul>
+
+        <h4>1. 기본 네이밍 원칙</h4>
+        <ul>
+          <li><strong>의미 있는 이름 사용하기:</strong> 요소의 목적이나 내용을 명확하게 표현해야 합니다 (예: .nav-menu, .product-card)</li>
+          <li><strong>축약어 사용 주의:</strong> 과도한 축약은 가독성을 해치므로, 명확성을 위해 완전한 단어를 사용하되, 일반적으로 알려진 축약어(nav, btn)는 허용됩니다</li>
+          <li><strong>소문자 사용:</strong> CSS는 대소문자를 구분하므로, 일관성을 위해 소문자만 사용하는 것을 권장합니다</li>
+          <li><strong>특수문자 제한:</strong> 문자, 숫자, 하이픈(-), 언더스코어(_)만 사용 가능합니다</li>
+          <li><strong>숫자로 시작 금지:</strong> 클래스명은 숫자로 시작할 수 없으며, 반드시 문자와 하이픈, 언더스코어로 시작해야 합니다</li>
+          <li><strong>이름 길이 적절히 유지:</strong> 너무 길거나 복잡한 이름은 가독성을 해치고, 너무 짧고 모호한 이름도 피해야 합니다</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>2. 주요 네이밍 컨벤션</h4>
+
+        <h5>케밥 케이스 (kebab-case)</h5>
+        <ul>
+          <li>단어 사이를 하이픈(-)으로 구분하는 방식입니다</li>
+          <li><strong>CSS 클래스 네이밍에 가장 널리 사용됩니다</strong></li>
+          <li>장점: HTML과의 일관성, 가독성, 호환성 (모두 소문자), 국제화에 용이</li>
+        </ul>
+
+        <h5>카멜 케이스 (camelCase)</h5>
+        <p>첫 단어는 소문자로 시작하고 이후 각 단어의 첫 글자를 대문자로 표기합니다. JavaScript에서 주로 사용하며, CSS에서는 권장되지 않습니다.</p>
+
+        <h5>스네이크 케이스 (snake_case)</h5>
+        <p>단어 사이를 언더스코어(_)로 구분하는 방식입니다. 파일명이나 데이터베이스 필드에 주로 사용되며, CSS에서는 자주 사용되지 않습니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>3. 주요 네이밍 방법론</h4>
+
+        <h5>BEM (Block Element Modifier)</h5>
+        <ul>
+          <li>Block, Element, Modifier 세 가지 개념으로 구성됩니다</li>
+          <li>클래스 이름만으로 HTML 구조를 이해할 수 있게 해줍니다</li>
+          <li>예: <code>.card</code> (Block), <code>.card__title</code> (Element), <code>.card--featured</code> (Modifier)</li>
+          <li>장점: 명확한 구조, 모듈성, 네임스페이스 충돌 방지, 쉬운 디버깅. 실무에서 널리 사용됩니다</li>
+        </ul>
+
+        <h5>OOCSS (Object Oriented CSS)</h5>
+        <p>구조와 스킨을 분리하여 재사용 가능한 CSS를 작성하는 방법론입니다.</p>
+        <p>예: <code>.btn</code> (구조), <code>.btn-primary</code> (스킨). HTML에서 <code>&lt;button class="btn btn-primary"&gt;</code>와 같이 두 클래스를 함께 사용합니다.</p>
+
+        <h5>SMACSS (Scalable and Modular Architecture for CSS)</h5>
+        <p>CSS를 Base, Layout, Module, State, Theme의 카테고리로 분류하여 구조화하는 방법론입니다.</p>
+
+        <div class="highlight">
+          <h4>코딩 컨벤션의 핵심</h4>
+          <p>
+            CSS 네이밍 규칙은 단순한 코딩 스타일 이상으로, 코드 품질, 유지보수성, 팀 협업에 중요합니다. 
+            어떤 방법론을 선택하든, 일관성을 유지하고 의미를 명확하게 전달하는 것이 가장 중요합니다.
+          </p>
+        </div>
+      </section>
+    </section>
+
+    <section id="chapter11" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>CSS 텍스트 속성들의 종류와 사용법 이해</li>
+          <li>절대 단위와 상대 단위의 차이점과 활용 방법 학습</li>
+          <li>list-style 속성을 통한 목록 스타일링 기법 습득</li>
+          <li>가상 클래스와 가상 요소의 개념과 실무 활용법 이해</li>
+          <li>CSS 변수와 :root를 활용한 효율적인 스타일 관리 방법 학습</li>
+        </ul>
+      </div>
+
+      <h2>11장 텍스트 관련 속성</h2>
+
+      <section id="text-styling">
+        <h3>11.1 텍스트 꾸미기</h3>
+
+        <h4>color (색상)</h4>
+        <p>텍스트의 색상을 설정하며, font- 접두사가 붙지 않습니다.</p>
+
+        <h5>표현 방법</h5>
+        <ul>
+          <li><strong>키워드:</strong> red, black 등 미리 정의된 값</li>
+          <li><strong>Hex 코드:</strong> #으로 시작하는 6자리 16진수 (빨강, 초록, 파랑 강도)</li>
+          <li><strong>RGB, RGBA:</strong> Red, Green, Blue 조합 (0~255). RGBA는 알파 값 (0~1)을 추가하여 투명도 설정</li>
+          <li><strong>currentColor:</strong> 요소의 color 속성값을 나타냅니다</li>
+        </ul>
+
+        <div class="note">
+          <p><strong>접근성:</strong> 저시력 시각 장애를 위해 폰트 색상과 배경의 명도 대비(최소 4.5:1)가 중요합니다.</p>
+        </div>
+
+        <h4>font-family (글꼴)</h4>
+        <p>글꼴을 지정하며, 여러 글꼴을 쉼표로 구분하여 작성합니다.</p>
+        <ul>
+          <li>왼쪽부터 순서대로 사용자의 컴퓨터에 설치된 글꼴을 찾아 적용합니다</li>
+          <li>마지막에는 항상 <strong>일반 글꼴 계열(Generic Font Families)</strong>을 지정하는 것이 좋습니다</li>
+        </ul>
+
+        <h5>웹폰트 적용 방법</h5>
+        <ul>
+          <li><strong>&lt;link&gt; 방식:</strong> HTML &lt;head&gt;에 직접 삽입. 폰트 로딩 시간 단축, CSS 파일 분리 관리 용이</li>
+          <li><strong>@import 방식:</strong> CSS 파일 내 @import 구문 사용. &lt;link&gt; 방식보다 로딩이 늦을 수 있습니다</li>
+          <li><strong>@font-face 방식:</strong> CSS에서 폰트 정의를 직접 작성. 여러 형식의 폰트 파일이 필요할 수 있습니다</li>
+        </ul>
+
+        <h4>font-size (글꼴 크기)</h4>
+        <p>글꼴 크기를 조절합니다.</p>
+
+        <h5>주요 단위</h5>
+        <ul>
+          <li><strong>px:</strong> 절대 단위, 화면의 최소 단위인 픽셀 기준</li>
+          <li><strong>em:</strong> 현재 요소의 부모 요소 글꼴 크기 기준의 상대 단위</li>
+          <li><strong>rem:</strong> 루트 요소 (&lt;html&gt;) 글꼴 크기 기준의 상대 단위 ('root em')</li>
+        </ul>
+
+        <div class="highlight">
+          <h5>실무 활용</h5>
+          <p>
+            반응형 웹페이지 개발 및 유지보수에 용이하여 em, rem과 같은 상대 단위를 주로 사용합니다.
+            rem은 일반적으로 설계의 기반이 되고, em은 컴포넌트 내부 요소에 사용됩니다.
+          </p>
+        </div>
+
+        <h4>font-weight (글꼴 굵기)</h4>
+        <p>텍스트의 굵기를 조절합니다.</p>
+        <ul>
+          <li><strong>숫자 값:</strong> 100부터 900까지 100 단위로 지정 가능 (예: 400 (Normal), 700 (Bold))</li>
+          <li><strong>키워드:</strong> normal (400), bold (700), lighter, bolder</li>
+          <li><strong>주의:</strong> 모든 폰트가 9단계 굵기를 모두 지원하지는 않습니다</li>
+        </ul>
+
+        <h4>text-transform (텍스트 변형하기)</h4>
+        <p>텍스트의 대소문자를 변형합니다 (영문 텍스트에 유용).</p>
+        <p>값: none, uppercase, lowercase, capitalize</p>
+
+        <h4>text-decoration (텍스트 장식하기)</h4>
+        <p>텍스트에 장식을 추가하는 단축 속성입니다.</p>
+        <ul>
+          <li><strong>개별 속성:</strong> text-decoration-line, text-decoration-color, text-decoration-style, text-decoration-thickness</li>
+          <li><strong>활용:</strong> 링크 스타일링, 중요한 텍스트 강조, 삭제된 텍스트 표시</li>
+        </ul>
+
+        <h4>text-shadow (텍스트 그림자)</h4>
+        <p>텍스트에 그림자 효과를 추가합니다.</p>
+        <p>값: offset-x (수평), offset-y (수직), blur-radius (흐림 정도, 선택적), color</p>
+
+        <h4>text-align (텍스트 가로 정렬)</h4>
+        <p>블록 레벨 요소 내부의 인라인 콘텐츠(텍스트, 인라인 요소)의 가로 정렬을 설정합니다.</p>
+        <p>값: left, right, center, justify</p>
+
+        <div class="important">
+          <p><strong>주의:</strong> justify (양쪽 정렬) 사용 시 <strong>흰 강 현상 (River of white)</strong>이 발생하여 가독성을 해칠 수 있으므로 권장하지 않습니다.</p>
+        </div>
+
+        <h4>vertical-align (세로 정렬)</h4>
+        <p>인라인/인라인 블록 요소나 테이블 셀 요소의 수직 정렬을 조정합니다.</p>
+        <ul>
+          <li>블록 레벨 요소에는 적용되지 않습니다 (블록 레벨의 수직 정렬은 Flexbox 사용)</li>
+          <li>값: baseline (기본값), sub, super, top, text-top, bottom, text-bottom, middle</li>
+        </ul>
+
+        <h4>line-height (행간 조정)</h4>
+        <p>텍스트 줄 사이의 간격(행간)을 설정합니다. 가독성에 큰 영향을 미칩니다.</p>
+        <p>값: normal (기본값), 숫자 (배수), 단위 (px, em, %)</p>
+        <p><strong>팁:</strong> 본문 텍스트는 1.5 ~ 1.8 사이의 값을 사용하면 좋은 가독성을 얻을 수 있습니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>기타 텍스트 관련 속성들</h4>
+        <ul>
+          <li><strong>letter-spacing:</strong> 글자 사이의 간격(자간)을 조절합니다</li>
+          <li><strong>text-indent:</strong> 텍스트가 시작하기 전 빈 공간(들여쓰기)을 설정합니다</li>
+          <li><strong>word-break:</strong> 텍스트가 콘텐츠 박스 밖으로 넘칠 경우 줄바꿈 동작을 지정합니다</li>
+          <li><strong>text-overflow:</strong> 부모 컨테이너를 넘어간 콘텐츠가 어떻게 보여질지 결정합니다</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="units">
+        <h3>11.2 단위</h3>
+
+        <p>웹 디자인에서 크기를 지정할 때 다양한 단위를 사용할 수 있습니다.</p>
+
+        <h4>1. 절대 길이 단위</h4>
+        <p>외부의 영향을 받지 않는 절대적인 값을 지니는 단위입니다.</p>
+        <ul>
+          <li><strong>px (픽셀):</strong> 디지털 화면의 이미지를 표현하는 가장 작은 단위</li>
+          <li>고정된 값이라 직관적으로 이해하기 쉽고 사용하기 편리합니다</li>
+        </ul>
+
+        <div class="important">
+          <p>
+            <strong>px 단위만 사용하면 안 되는 이유:</strong> 다양한 디바이스와 픽셀 밀도로 인해 디바이스별로 다른 위치, 크기로 보일 수 있습니다. 
+            반응형 웹, 접근성, 사용자 경험을 위해 상대 단위 이해가 필수입니다.
+          </p>
+        </div>
+
+        <h4>2. 상대 길이 단위</h4>
+        <p>외부의 영향(다른 요소나 뷰포트 크기 등)을 받아 상대적으로 크기가 변하는 단위입니다.</p>
+
+        <h5>% (퍼센트)</h5>
+        <p>부모 요소의 해당 속성 값을 기준으로 하는 상대 단위</p>
+
+        <h5>뷰포트 단위 (vw, vh)</h5>
+        <p>브라우저 창(뷰포트)의 크기를 기준으로 합니다. 1vw는 뷰포트 너비의 1%, 1vh는 뷰포트 높이의 1%</p>
+
+        <h5>상대적 글꼴 크기 단위 (em, rem)</h5>
+        <ul>
+          <li><strong>em:</strong> 부모 요소로부터 상속받은 글자 크기를 기준으로 하는 배수 단위</li>
+          <li><strong>rem:</strong> 최상의 요소 (&lt;html&gt;)의 글자 크기를 기준으로 하는 배수 단위</li>
+        </ul>
+
+        <div class="highlight">
+          <h5>em, rem 사용 상황</h5>
+          <ul>
+            <li><strong>rem:</strong> 레이아웃 구성 요소, 텍스트 관련 속성. 전체 페이지에서 일관된 간격 유지</li>
+            <li><strong>em:</strong> 컴포넌트 내부 요소 등 부모 요소의 크기에 비례하는 관계를 유지할 때</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="list-style">
+        <h3>11.3 list-style</h3>
+
+        <p>HTML의 순서 없는 목록 (&lt;ul&gt;)과 순서 있는 목록 (&lt;ol&gt;)의 스타일을 커스터마이즈합니다.</p>
+        
+        <h4>list-style-type</h4>
+        <p>마커의 모양을 변경합니다.</p>
+        <p>주요 값: disc (채워진 원, 기본값), circle (빈 원), square (채워진 사각형), decimal (숫자), lower-alpha (소문자 알파벳), upper-roman (대문자 로마 숫자)</p>
+
+        <h4>list-style-position</h4>
+        <p>마커의 위치를 지정합니다.</p>
+        <ul>
+          <li><strong>outside:</strong> 리스트 항목 텍스트 블록 외부에 마커 배치 (기본값)</li>
+          <li><strong>inside:</strong> 리스트 항목 텍스트 블록 내부에 마커 포함</li>
+        </ul>
+
+        <h4>list-style-image</h4>
+        <p>기본 리스트 마커 대신 사용자 지정 이미지를 사용할 수 있게 해줍니다.</p>
+        
+        <div class="note">
+          <p><strong>주의:</strong> 이미지 크기가 자동으로 조정되지 않으므로 적절한 크기의 이미지를 준비해야 합니다.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h4>@counter-style</h4>
+        <p>사용자 정의 카운터 스타일을 만들 수 있는 규칙입니다.</p>
+        <p>주요 속성: system, symbols, suffix, range, fallback</p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="pseudo-classes">
+        <h3>11.4 가상 클래스와 가상 요소</h3>
+
+        <p>CSS에서는 특별한 상태나 위치를 지정할 수 있는 가상 클래스와 가상 요소를 제공하여 HTML 구조 변경 없이 세밀하고 동적인 스타일링이 가능합니다.</p>
+
+        <h4>1. 가상 클래스 선택자 (Pseudo-class selectors)</h4>
+        <p>요소의 특정 상태를 선택합니다. <strong>콜론(:)</strong>을 사용하여 표현됩니다.</p>
+
+        <h5>동적 가상 클래스 선택자</h5>
+        <ul>
+          <li><strong>:link:</strong> 아직 방문하지 않은 링크</li>
+          <li><strong>:visited:</strong> 이미 방문한 링크</li>
+          <li><strong>:hover:</strong> 마우스 포인터가 올라간 요소</li>
+          <li><strong>:active:</strong> 마우스로 클릭하고 있는 요소</li>
+          <li><strong>:focus:</strong> 현재 초점을 가진 요소</li>
+        </ul>
+
+        <h5>구조적 가상 클래스 선택자</h5>
+        <ul>
+          <li><strong>:first-child:</strong> 형제 요소 그룹 중 첫 번째 요소</li>
+          <li><strong>:last-child:</strong> 형제 요소 그룹 중 마지막 요소</li>
+          <li><strong>:nth-child(n):</strong> 부모 요소 내 모든 자식 중 지정된 순서의 요소 선택</li>
+          <li><strong>:nth-of-type(n):</strong> 부모 요소 내 같은 타입의 형제 중 지정된 순서의 요소 선택</li>
+          <li><strong>:not(selector):</strong> 특정 선택자를 제외한 요소를 선택</li>
+          <li><strong>:has(selector):</strong> 특정 요소가 자식 요소를 포함하고 있는지를 검사하여 스타일을 적용</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>2. 가상 요소 (Pseudo-elements)</h4>
+        <p>말 그대로 가상의 요소를 만들거나 선택한 요소의 특정 부분에 스타일을 적용합니다. <strong>이중 콜론(::)</strong>을 사용하여 표현됩니다.</p>
+
+        <ul>
+          <li><strong>::before, ::after:</strong> 선택한 요소의 내용 앞이나 뒤에 새로운 요소를 만들어 콘텐츠 추가</li>
+          <li><strong>::marker:</strong> 리스트 아이템의 마커를 스타일링</li>
+          <li><strong>::placeholder:</strong> &lt;input&gt;과 &lt;textarea&gt; 요소의 플레이스홀더 텍스트에 스타일을 적용</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="css-variables">
+        <h3>11.5 CSS 변수</h3>
+
+        <h4>1. :root</h4>
+        <p>문서 트리의 루트 요소를 선택하는 가상 클래스입니다. HTML에서는 &lt;html&gt; 요소를 가리킵니다.</p>
+        <p>전역 CSS 변수를 선언할 때 주로 사용되며, 문서 전체에서 변수를 사용할 수 있게 하여 일관된 디자인 시스템 구축에 핵심적인 역할을 합니다.</p>
+
+        <h4>2. CSS Variables (CSS 사용자 정의 속성)</h4>
+        <ul>
+          <li><code>--</code>로 시작하는 이름을 가집니다</li>
+          <li><code>var()</code> 함수를 사용하여 값을 참조할 수 있습니다</li>
+          <li><strong>장점:</strong> 스타일을 쉽게 재사용하고 관리할 수 있으며, 특히 브랜드 디자인 시스템 구축에 유용합니다</li>
+        </ul>
+
+        <div class="highlight">
+          <h5>테마 전환</h5>
+          <p>
+            CSS 변수는 다크 모드와 라이트 모드 등 테마 전환에 특히 유용합니다. 
+            :root에 기본 테마 변수를 정의하고, JavaScript로 data-theme 속성만 변경하면 쉽게 테마를 전환할 수 있습니다.
+          </p>
+        </div>
+      </section>
+    </section>
+
+    <section id="chapter12" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>CSS Box Model의 구성 요소와 동작 원리 이해</li>
+          <li>display 속성의 다양한 값들과 각각의 특징 학습</li>
+          <li>이미지 비율 유지 기법 습득</li>
+          <li>CSS 초기화의 필요성과 다양한 방법론 이해</li>
+        </ul>
+      </div>
+
+      <h2>12장 CSS의 기본, Box Model</h2>
+
+      <section id="box-model">
+        <h3>12.1 CSS Box Model</h3>
+
+        <p>CSS Box Model은 웹 페이지 레이아웃의 근간을 이루는 중요한 개념입니다.</p>
+        <p>모든 HTML 요소는 하나의 <strong>'상자'</strong>로 취급되며, 웹 페이지는 이런 상자들이 모여있는 것이라고 할 수 있습니다.</p>
+
+        <h4>이 상자는 다음과 같이 구성됩니다:</h4>
+        <ul>
+          <li><strong>요소(element):</strong> 텍스트, 사진 등 실제 보여줄 대상</li>
+          <li><strong>패딩(padding):</strong> 요소 주변 영역을 감싸는 내부 여백</li>
+          <li><strong>테두리(border):</strong> 요소와 패딩을 감싸는 테두리</li>
+          <li><strong>마진(margin):</strong> 테두리 밖의 영역을 감싸는 외부 여백</li>
+        </ul>
+
+        <div class="important">
+          <p><strong>주의사항:</strong> Box Model은 블록박스에 적용됩니다. 인라인 박스에는 width, height, 상하 margin 값이 적용되지 않습니다.</p>
+        </div>
+
+        <h4>주요 속성들</h4>
+
+        <h5>width &amp; height</h5>
+        <ul>
+          <li><strong>width:</strong> 요소의 너비를 설정합니다 (기본값: auto)</li>
+          <li><strong>height:</strong> 요소의 높이를 설정합니다 (기본값: auto)</li>
+        </ul>
+
+        <h5>padding (내부 여백)</h5>
+        <p>콘텐츠 주변의 여백을 만듭니다 (element와 border 사이).</p>
+        <p>단축 속성으로, padding-top, padding-right, padding-bottom, padding-left 순서대로 작성합니다.</p>
+
+        <h5>margin (외부 여백)</h5>
+        <p>요소 주변의 여백을 만듭니다 (border 바깥).</p>
+        
+        <div class="note">
+          <h6>요소의 배치 (가운데 정렬)</h6>
+          <ul>
+            <li><code>margin-left: auto;</code>: 왼쪽 여백을 최대로 가져서 오른쪽 정렬</li>
+            <li><code>margin: 0 auto;</code>: 좌우 여백을 자동으로 균등 분배하여 가운데 정렬</li>
+          </ul>
+        </div>
+
+        <h5>border (테두리)</h5>
+        <p>요소의 테두리를 지정합니다. 선의 두께, 스타일, 색상 등 여러 속성의 단축 속성입니다.</p>
+
+        <h5>box-sizing</h5>
+        <p>요소의 총 너비와 높이를 계산하는 방식을 지정합니다.</p>
+        <ul>
+          <li><strong>content-box:</strong> 기본값. width = content 영역의 너비</li>
+          <li><strong>border-box:</strong> width = content + border + padding</li>
+        </ul>
+
+        <div class="highlight">
+          <p>
+            <strong>실무 권장:</strong> border-box를 사용하면 실제 렌더링되는 박스 크기를 직관적으로 제어할 수 있어 거의 표준처럼 사용됩니다. 
+            <code>* { box-sizing: border-box; }</code>로 모든 요소에 적용하는 것을 권장합니다.
+          </p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h5>기타 박스 관련 속성들</h5>
+        <ul>
+          <li><strong>overflow:</strong> 요소의 콘텐츠가 요소의 크기를 초과할 때 어떻게 처리할지 지정</li>
+          <li><strong>border-radius:</strong> 요소의 모서리를 둥글게 만듭니다</li>
+          <li><strong>background:</strong> 요소의 배경을 설정하는 강력한 단축 속성</li>
+          <li><strong>box-shadow:</strong> 요소에 그림자 효과를 추가</li>
+          <li><strong>opacity:</strong> 요소의 불투명도를 설정 (0~1)</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="display">
+        <h3>12.2 display 속성</h3>
+
+        <p>display 속성은 CSS에서 레이아웃을 결정짓는 가장 중요한 속성 중 하나입니다.</p>
+        <p>요소가 문서 흐름에서 다른 박스들과 어떤 방식으로 배치될지를 결정합니다.</p>
+
+        <h4>주요 display 값들</h4>
+
+        <h5>block</h5>
+        <ul>
+          <li>요소 전후에 줄 바꿈을 생성</li>
+          <li>새로운 줄에서 시작하며, 가능한 전체 너비를 차지</li>
+          <li>width, height, margin, padding 모두 사용 가능</li>
+        </ul>
+
+        <h5>inline</h5>
+        <ul>
+          <li>요소 전후에 줄 바꿈을 생성하지 않음</li>
+          <li>텍스트 흐름에 따라 같은 줄에 위치</li>
+          <li>width, height, 상하 margin 속성은 사용할 수 없음</li>
+        </ul>
+
+        <h5>inline-block</h5>
+        <p>inline처럼 텍스트 흐름에 따라 배치되지만, block처럼 width, height, margin, padding을 모두 지정할 수 있습니다.</p>
+
+        <h5>flex</h5>
+        <p>내부 자식 요소들을 단방향(1차원적)으로 배치. 가로줄이나 세로줄을 만들어 요소들을 배치할 때 사용.</p>
+
+        <h5>grid</h5>
+        <p>내부 자식 요소들을 <strong>2차원적(격자 형태)</strong>으로 배치. 복잡한 레이아웃을 쉽게 구현.</p>
+
+        <h5>none</h5>
+        <p>해당 요소를 완전히 숨깁니다. 렌더링되지 않고, 레이아웃에서 공간을 차지하지 않으며, 접근성 트리에서도 제거됩니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>웹 접근성을 고려한 숨김 처리</h4>
+        <p>시각적으로 불필요하지만 보조도구 사용자에게는 필요한 정보를 숨기는 기술입니다.</p>
+
+        <ul>
+          <li><strong>display:none; or visibility:hidden;:</strong> 모든 사용자에게 콘텐츠를 숨깁니다</li>
+          <li><strong>콘텐츠를 화면 밖으로 보내기 (sr-only 클래스):</strong> 스크린 리더가 읽도록 합니다</li>
+          <li><strong>CSS 클립 방법 (a11y-hidden 클래스):</strong> clip-path를 사용하여 스크린 리더가 읽지만 시각적으로는 숨깁니다</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="image-ratio">
+        <h3>12.3 이미지 비율 유지하기</h3>
+
+        <p>웹 디자인에서 이미지의 비율을 유지하는 것은 레이아웃의 일관성과 시각적 아름다움을 위해 중요합니다.</p>
+
+        <h4>1. aspect-ratio 속성 사용하기</h4>
+        <ul>
+          <li>요소의 기본 가로세로 비율을 설정합니다 (예: <code>aspect-ratio: 2 / 1;</code>)</li>
+          <li>최신 브라우저에서 지원하며, 이미지 비율 유지를 위한 가장 직관적이고 간단한 방법입니다</li>
+          <li><code>object-fit</code> 속성과 함께 사용하여 이미지가 설정된 비율을 유지하면서 요소를 채우도록 할 수 있습니다</li>
+        </ul>
+
+        <h5>object-fit</h5>
+        <p>이미지나 비디오가 지정된 크기의 컨테이너에 어떻게 맞춰질지 결정합니다.</p>
+        <ul>
+          <li><strong>fill:</strong> 컨테이너를 가득 채우며, 원래 비율 변경될 수 있음 (기본값)</li>
+          <li><strong>contain:</strong> 비율 유지하며 컨테이너 내 완전히 표시</li>
+          <li><strong>cover:</strong> 비율 유지하며 컨테이너 가득 채움. 이미지 일부 잘릴 수 있음</li>
+          <li><strong>none:</strong> 크기 조정 없이 원본 크기 그대로 표시</li>
+          <li><strong>scale-down:</strong> none과 contain 중 더 작은 것을 적용</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>2. padding 백분율 값 활용하기</h4>
+        <p>padding의 백분율 값은 항상 부모 요소의 너비를 기준으로 계산됩니다. 이 특성을 이용하여 화면 크기에 맞는 일정한 비율을 유지하는 박스를 만들 수 있습니다.</p>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="css-reset">
+        <h3>12.4 CSS 초기화</h3>
+
+        <p>각 브라우저가 HTML 요소에 대해 기본적으로 제공하는 스타일(사용자 에이전트 스타일) 때문에 브라우저마다 동일한 HTML이 다르게 렌더링될 수 있습니다.</p>
+        
+        <p><strong>CSS 초기화(CSS Reset)</strong>는 이러한 브라우저 간 차이를 최소화하고, 개발자가 의도한 대로 스타일을 구현할 수 있는 일관된 기반을 제공하기 위해 사용됩니다.</p>
+
+        <h4>크로스 브라우징(Cross Browsing)</h4>
+        <p>웹 페이지가 다양한 브라우저와 디바이스에서 일관된 사용자 경험을 제공할 수 있도록 하는 웹 개발 방식입니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>주요 CSS 초기화 방법</h4>
+        <ul>
+          <li><strong>에릭 마이어의 Reset CSS:</strong> 가장 널리 알려진 방식. 모든 요소의 마진, 패딩을 0으로 만들고, 기본 서식을 제거</li><ul><li><a href="https://meyerweb.com/eric/tools/css/reset/" target="_blank" style="font-family: &quot;Noto Sans KR&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">meyerweb.com</a></li></ul><li><strong>Normalize.css:</strong> 브라우저 간 차이를 줄이되, 유용한 기본 스타일은 보존</li><ul><li><a href="https://necolas.github.io/normalize.css/" target="_blank">normalize.css</a></li></ul>
+          <li><strong>sanitize.css:</strong> Normalize.css를 기반으로 하되, 더 많은 요소와 속성을 다루고, 현대적인 웹 개발 트렌드 반영</li><ul><li><a href="https://csstools.github.io/sanitize.css/" target="_blank">sanitize.css</a></li></ul>
+          <li><strong>CSS Remedy:</strong> 모던 CSS 기능을 활용한 최신 브라우저 대상 초기화 방식</li><ul><li><a href="https://github.com/jensimmons/cssremedy" target="_blank">[GitHub] cssremedy</a></li></ul>
+          <li><strong>사용자 지정 Reset CSS:</strong> 팀의 특정 요구에 맞는 Reset CSS</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="chapter13" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>CSS position 속성의 다양한 값과 각각의 특성 이해</li>
+          <li>static, relative, absolute, fixed, sticky의 차이점과 활용법 학습</li>
+          <li>z-index와 쌓임 맥락(Stacking Context) 개념 이해</li>
+          <li>요소의 3차원적 배치와 겹침 순서 제어 능력 습득</li>
+        </ul>
+      </div>
+
+      <h2>13장 CSS 레이아웃 기초</h2>
+
+      <section id="position">
+        <h3>13.1 position</h3>
+
+        <p>position 속성: 문서상에 요소를 배치하는 방법을 지정하며, 복잡한 레이아웃 구성에 유용합니다.</p>
+
+        <h4>주요 position 값</h4>
+
+        <h5>static (기본값)</h5>
+        <p>HTML 작성 순서대로 정상적인 흐름(normal flow)에 따라 위치가 지정됩니다.</p>
+
+        <h5>relative</h5>
+        <p>요소가 원래 있어야 할 위치를 기준으로 상대적으로 위치를 조정합니다. 다른 콘텐츠들의 위치에 영향을 미치지 않으면서 자신의 위치만 조정할 수 있습니다.</p>
+
+        <h5>absolute</h5>
+        <p>가장 가까운 조상 중 position 속성이 static이 아닌 요소를 기준으로 절대적인 위치를 잡습니다. 일반적인 문서 흐름에서 제거되어 독립적으로 위치를 잡습니다.</p>
+
+        <h5>fixed</h5>
+        <p>뷰포트(브라우저 창)를 기준으로 고정 위치에 배치됩니다. 스크롤을 해도 화면의 같은 위치에 고정되며, 일반 문서 흐름에서 제거됩니다.</p>
+
+        <h5>sticky</h5>
+        <p>스크롤 위치에 따라 relative와 fixed 사이를 전환하는 특별한 속성값입니다. 스크롤되는 가장 가까운 상위요소를 기준으로 고정됩니다.</p>
+
+        <div class="important">
+          <p><strong>주의사항:</strong> position 속성을 사용할 때는 요소들이 서로 겹치거나 가려지지 않도록 주의하고, 브라우저 지원 여부를 확인하는 것이 중요합니다.</p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="z-index">
+        <h3>13.2 z-index</h3>
+
+        <h4>요소 쌓임 맥락 (Stacking Context)</h4>
+        <p>웹 페이지에서 HTML 요소들이 3차원적으로 어떻게 배치되고 겹쳐질지를 결정하는 개념적인 공간입니다.</p>
+        <ul>
+          <li>웹 페이지의 최상위 요소인 HTML 태그에서 자동으로 생성됩니다</li>
+          <li>position 속성이 fixed나 sticky로 설정된 요소에서도 새로운 쌓임 맥락이 만들어집니다</li>
+        </ul>
+
+        <h4>z-index 속성</h4>
+        <p>요소의 쌓임 순서(stacking order)를 결정하며, 어떤 요소가 다른 요소 위에 나타날지를 제어합니다.</p>
+
+        <div class="page-break"></div>
+
+        <h4>z-index의 기본 특성</h4>
+        <ul>
+          <li>position이 static 외의 값을 가진 박스에만 z-index를 통한 Z축 순서 지정을 할 수 있습니다</li>
+          <li>값이 클수록 제일 위로 배치됩니다</li>
+          <li>부모가 z-index를 높여 자식 앞으로 나올 수는 없습니다</li>
+          <li>자식은 z-index를 음수 값으로 주어 부모 뒤로 가는 것이 가능합니다</li>
+          <li>부모 요소의 z-index가 낮으면 자식의 z-index가 아무리 높아도 한계가 있습니다</li>
+          <li>유지보수를 위해 10이나 100 단위로 작업하는 것이 좋습니다</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="chapter14" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>Float 속성의 개념과 레이아웃에서의 역할 이해</li>
+          <li>Flexbox와 Grid를 활용한 현대적 레이아웃 구성 능력 습득</li>
+          <li>고급 CSS 선택자를 활용한 정교한 스타일링 기법 학습</li>
+          <li>1차원(Flex)과 2차원(Grid) 레이아웃의 차이점과 적절한 사용법 이해</li>
+        </ul>
+      </div>
+
+      <h2>14장 CSS 레이아웃 심화</h2>
+
+      <section id="float">
+        <h3>14.1 float</h3>
+
+        <h4>float 속성</h4>
+        <p>요소를 페이지의 일반적인 레이아웃 흐름에서 벗어나게 하여, 텍스트나 다른 인라인 요소들이 그 주위를 감싸도록 만드는 레이아웃 기술입니다.</p>
+        <ul>
+          <li>값: left, right, none (기본값)</li>
+          <li><strong>주의:</strong> float를 적용하면 요소는 블록 레이아웃을 사용하게 됩니다</li>
+        </ul>
+
+        <h4>float 해제하기 (clear 속성)</h4>
+        <p>float 사용 시 발생하는 레이아웃 문제를 방지하기 위해 clear 속성을 사용합니다.</p>
+        <ul>
+          <li><strong>clear: left:</strong> 왼쪽에 float된 요소 다음에 오도록 합니다</li>
+          <li><strong>clear: right:</strong> 오른쪽에 float된 요소 다음에 오도록 합니다</li>
+          <li><strong>clear: both:</strong> 모든 방향의 float를 한 번에 해제하는 가장 포괄적이고 안전한 방법으로 권장됩니다</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>float 사용 시 주의사항 해결</h4>
+        <p>자식 요소들이 모두 float 속성을 가지면 부모 컨테이너의 높이가 자식 요소들을 포함하지 못하는 문제가 발생할 수 있습니다.</p>
+
+        <h5>해결 방법</h5>
+        <ol>
+          <li>부모에 높이 값 지정: 유연성이 떨어집니다</li>
+          <li>부모에 <code>overflow: hidden</code> 적용</li>
+          <li>clearfix 방법 사용: <code>::after</code> 가상 요소를 사용하여 <code>clear: both</code>를 적용하는 가장 널리 사용되는 방법입니다</li>
+        </ol>
+
+        <div class="note">
+          <p><strong>현대 웹에서의 활용:</strong> 최근에는 Flexbox나 Grid와 같은 현대적인 레이아웃 기술이 주로 사용되지만, float는 이미지를 텍스트 주변에 배치하는 등 특정 상황에서 여전히 유용하게 활용됩니다.</p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="flex">
+        <h3>14.2 flex</h3>
+
+        <h4>Flexbox</h4>
+        <p>현대 웹 디자인에서 가장 강력한 레이아웃 도구 중 하나로, <strong>1차원적 레이아웃(행 또는 열)</strong>을 쉽게 만들고 요소들의 크기와 순서를 동적으로 조절할 수 있습니다.</p>
+
+        <p>flex 적용 방법: 부모 요소에 <strong>display: flex</strong>를 설정하면 자식 요소들이 flex item이 되어 flexbox 레이아웃을 사용할 수 있습니다.</p>
+
+        <h4>flex-container에 사용하는 속성</h4>
+
+        <h5>flex-direction</h5>
+        <p>주축의 방향을 설정합니다. (기본값: row)</p>
+        <p>값: row (왼쪽에서 오른쪽), column (위에서 아래), row-reverse, column-reverse</p>
+
+        <h5>justify-content</h5>
+        <p>주축을 기준으로 아이템들의 위치를 조절하거나 간격을 설정합니다.</p>
+        <p>값: flex-start, flex-end, center, space-between, space-around, space-evenly</p>
+
+        <h5>align-items</h5>
+        <p>교차 축을 기준으로 아이템을 정렬합니다.</p>
+        <p>값: stretch (기본값), flex-start, flex-end, center, baseline</p>
+
+        <h5>기타 주요 속성들</h5>
+        <ul>
+          <li><strong>align-content:</strong> 여러 줄의 flex item들을 교차축 방향으로 정렬</li>
+          <li><strong>gap:</strong> 아이템 사이의 간격을 설정</li>
+          <li><strong>flex-wrap:</strong> 한 줄에 배치되게 할 것인지, 여러 행으로 나누어 표현할 것인지 결정</li>
+          <li><strong>flex-flow:</strong> flex-direction과 flex-wrap의 단축 속성</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>flex-item에 사용하는 속성</h4>
+        <ul>
+          <li><strong>flex-basis:</strong> flex-item의 초기 크기를 설정 (기본값: auto)</li>
+          <li><strong>flex-grow:</strong> 아이템이 flex container 내부에서 할당할 수 있는 공간의 비율을 지정</li>
+          <li><strong>flex-shrink:</strong> 아이템의 크기를 축소할 때 사용</li>
+          <li><strong>align-self:</strong> 개별 flex-item에 대해 교차축 정렬을 지정</li>
+          <li><strong>order:</strong> flex-item의 배치 순서를 지정 (기본값: 0)</li>
+          <li><strong>flex:</strong> flex-grow, flex-shrink, flex-basis의 단축 속성</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="grid">
+        <h3>14.3 grid</h3>
+
+        <h4>CSS Grid</h4>
+        <p>flex가 1차원 레이아웃을 담당한다면, grid는 행과 열을 동시에 제어하여 2차원 레이아웃을 쉽게 만들 수 있는 기술입니다.</p>
+
+        <h4>그리드의 기본 구성 요소</h4>
+        <ul>
+          <li><strong>그리드 컨테이너:</strong> 그리드의 가장 바깥 영역</li>
+          <li><strong>그리드 셀:</strong> 그리드의 한 칸 (개념적 정의)</li>
+          <li><strong>그리드 아이템:</strong> 그리드 컨테이너의 자식 요소</li>
+          <li><strong>그리드 트랙:</strong> 그리드의 행(row) 또는 열(column)</li>
+          <li><strong>그리드 라인:</strong> 그리드 셀을 구분하는 선</li>
+          <li><strong>그리드 갭 (gutter):</strong> 그리드 셀 사이의 간격</li>
+          <li><strong>그리드 에어리어:</strong> 그리드 셀의 집합</li>
+        </ul>
+
+        <p>grid 적용 방법: 부모 요소에 <strong>display: grid</strong>를 설정하면 자식 요소들이 grid item이 되어 레이아웃을 사용할 수 있습니다.</p>
+
+        <h4>grid-container에 사용하는 속성</h4>
+
+        <h5>행 방향과 열 방향 설정</h5>
+        <ul>
+          <li><strong>grid-template-columns:</strong> 열 방향 그리드 트랙의 사이즈를 설정</li>
+          <li><strong>grid-template-rows:</strong> 행 방향 그리드 트랙의 사이즈를 설정</li>
+          <li><strong>fr 단위 (fraction):</strong> 컨테이너를 분할하여 트랙의 비율을 지정하는 유연한 길이 단위</li>
+        </ul>
+
+        <h5>함수</h5>
+        <ul>
+          <li><strong>repeat():</strong> row 또는 column 방향으로 grid-track의 사이즈를 간단하게 반복 설정</li>
+          <li><strong>minmax():</strong> 그리드에서 최소와 최대 사이의 범위를 설정</li>
+        </ul>
+
+        <h5>auto-fill과 auto-fit</h5>
+        <p>repeat() 함수와 함께 사용되어 컨테이너의 너비에 따라 자동으로 그리드 컬럼을 배치합니다.</p>
+        <ul>
+          <li><strong>auto-fill:</strong> 가능한 많은 컬럼을 만들어내며, 컨테이너에 빈 공간이 남을 수 있습니다</li>
+          <li><strong>auto-fit:</strong> auto-fill과 유사하나, 컨테이너 내부에 공간이 남을 경우 그 공간을 각 셀들이 나눠 갖습니다</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>그리드 아이템 속성</h4>
+        <ul>
+          <li><strong>grid-area:</strong> 그리드 아이템의 위치와 크기를 지정하는 단축 속성</li>
+          <li><strong>span:</strong> 행과 열을 병합할 때 사용 (예: <code>span 3</code>은 셀 세 개를 의미)</li>
+          <li><strong>grid-template-areas:</strong> 영역을 정의하고 grid-area로 아이템을 배치</li>
+          <li><strong>z-index:</strong> 그리드 내에서 아이템의 쌓임 순서를 제어 (position 속성 없이도 우선순위 설정 가능)</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="advanced-selectors">
+        <h3>14.4 선택자 심화</h3>
+
+        <h4>고급 포커스 선택자</h4>
+        <ul>
+          <li><strong>:focus-visible:</strong> focus와 유사하지만, 주로 키보드 탐색이나 스크립트 포커스 관리 시 활성화됩니다</li>
+          <li><strong>:focus-within:</strong> 요소 또는 그 자식 요소가 포커스를 받았을 때 적용됩니다. 폼 디자인에 특히 유용합니다</li>
+        </ul>
+
+        <h4>상태 관련 가상 클래스 선택자</h4>
+        <ul>
+          <li><strong>:enabled:</strong> 활성화된 상태의 폼 요소를 선택</li>
+          <li><strong>:disabled:</strong> 비활성화된 상태의 폼 요소를 선택</li>
+          <li><strong>:checked:</strong> 체크된 상태의 라디오 버튼이나 체크박스를 선택</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>속성 선택자 ([])</h4>
+        <p>HTML 요소의 속성을 기반으로 요소를 선택하는 강력한 도구입니다.</p>
+        <ul>
+          <li><code>[속성이름]</code>: 해당 속성을 가진 모든 요소를 선택</li>
+          <li><code>[속성이름="속성값"]</code>: 해당 속성에 해당 속성값을 가진 모든 요소를 선택</li>
+          <li><code>[속성이름^="속성값"]</code>: 특정 문자열로 시작하는 요소를 모두 선택</li>
+          <li><code>[속성이름$="속성값"]</code>: 특정 문자열로 끝나는 요소를 모두 선택</li>
+          <li><code>[속성이름*="속성값"]</code>: 특정 문자열을 포함하는 요소를 모두 선택</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="chapter15" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>transform 속성의 다양한 변형 함수들과 활용법 이해</li>
+          <li>transition을 통한 부드러운 상태 변화 애니메이션 구현</li>
+          <li>keyframes를 활용한 복잡한 CSS 애니메이션 제작</li>
+          <li>3D transform과 perspective를 이용한 입체적 효과 구현</li>
+          <li>성능을 고려한 애니메이션 최적화 기법 학습</li>
+        </ul>
+      </div>
+
+      <h2>15장 CSS 애니메이션 및 트랜지션</h2>
+
+      <section id="transform">
+        <h3>15.1 transform</h3>
+
+        <h4>transform 속성</h4>
+        <p>요소에 회전, 크기 조절, 기울이기, 이동 효과를 적용할 수 있게 해줍니다. 이 속성을 사용하면 요소의 형태와 위치를 동적으로 변경할 수 있습니다.</p>
+
+        <h4>주요 transform 함수</h4>
+
+        <h5>translate()</h5>
+        <ul>
+          <li>요소를 현재 위치에서 지정된 거리만큼 이동시킵니다</li>
+          <li>% 단위는 요소 자신의 크기를 기준으로 이동 거리를 계산합니다</li>
+          <li><strong>활용 팁:</strong> <code>position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);</code> 코드로 요소를 정중앙에 정렬할 수 있습니다</li>
+        </ul>
+
+        <h5>scale()</h5>
+        <p>요소의 크기를 조절합니다. 1보다 큰 값은 확대, 1보다 작은 값은 축소합니다. 요소의 내용물(텍스트 등)도 함께 확대/축소됩니다.</p>
+
+        <h5>rotate()</h5>
+        <p>요소를 지정된 각도만큼 회전시킵니다. 양수 값은 시계 방향, 음수 값은 반시계 방향으로 회전합니다.</p>
+
+        <h5>skew()</h5>
+        <p>요소를 X축이나 Y축을 기준으로 기울입니다. 과도한 skew() 적용은 텍스트의 가독성을 해칠 수 있습니다.</p>
+
+        <h4>transform-origin</h4>
+        <p>변형(transform)이 적용되는 기준점을 설정합니다. (기본값: 요소의 중심점 50% 50%)</p>
+
+        <div class="page-break"></div>
+
+        <div class="highlight">
+          <h4>translate() vs position (성능 및 사용 목적)</h4>
+          <h5>렌더링 과정 차이</h5>
+          <ul>
+            <li><strong>position 변경 시:</strong> Layout 단계부터 다시 계산이 시작되어 성능상 불리할 수 있습니다</li>
+            <li><strong>transform 변경:</strong> Composite 단계에서만 처리되어 성능상 이점을 가집니다</li>
+          </ul>
+          
+          <h5>사용 지침</h5>
+          <ul>
+            <li><strong>translate 권장 경우:</strong> 애니메이션이나 빈번한 위치 변경이 필요할 때, 성능이 중요한 상황</li>
+            <li><strong>position 권장 경우:</strong> 정적인 레이아웃 구성 시, 복잡한 레이아웃 구조에서 요소를 배치할 때</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="transition">
+        <h3>15.2 transition</h3>
+
+        <h4>Transition</h4>
+        <p>요소의 속성 값이 변할 때, 그 변화가 일정 시간에 걸쳐 점진적으로 일어나도록 하는 기능입니다.</p>
+
+        <h4>주요 transition 속성</h4>
+
+        <h5>transition-property</h5>
+        <p>전환 효과를 적용할 CSS 속성을 지정합니다. (all, none, 특정 속성 이름)</p>
+
+        <h5>transition-duration</h5>
+        <p>transition이 완료되는 데 걸리는 시간을 설정합니다. (초(s) 또는 밀리초(ms))</p>
+
+        <h5>transition-timing-function</h5>
+        <p>transition의 진행 속도를 설정합니다.</p>
+        <ul>
+          <li>ease (기본값), linear, ease-in, ease-out, ease-in-out</li>
+          <li><strong>cubic-bezier(n,n,n,n):</strong> 4개의 컨트롤 포인트를 사용해 transition의 시작부터 끝까지의 효과를 제어</li>
+          <li><strong>steps(number_of_steps, direction):</strong> 변화의 단계를 설정. 프레임 기반 애니메이션이나 타이핑 효과 등에 유용</li>
+        </ul>
+
+        <h5>transition-delay</h5>
+        <p>transition 시작을 지연시키는 시간을 설정합니다. (음수 값 사용 시 이미 진행 중인 것처럼 시작)</p>
+
+        <h4>transition (단축 속성)</h4>
+        <p>property, duration, timing-function, delay 순서로 모든 transition 관련 속성을 한 번에 설정할 수 있습니다.</p>
+
+        <div class="important">
+          <p><strong>주의:</strong> 모든 CSS 속성이 transition을 지원하는 것은 아닙니다. (예: display, outline 등)</p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="animation">
+        <h3>15.3 animation</h3>
+
+        <h4>CSS Animation</h4>
+        <p>여러 스타일을 전환시킬 수 있으며, JavaScript 없이 요소에 애니메이션 효과를 적용할 때 사용합니다. 애니메이션을 나타내는 CSS 스타일과 애니메이션의 중간 상태를 나타내는 키프레임들로 이루어집니다.</p>
+
+        <div class="highlight">
+          <h4>transition vs animation</h4>
+          <ul>
+            <li><strong>transition:</strong> 요소의 상태가 변경되어야 애니메이션을 실행할 수 있습니다</li>
+            <li><strong>animation:</strong> 요소의 상태 변화와 관계없이 애니메이션을 실행할 수 있습니다</li>
+          </ul>
+        </div>
+
+        <h4>@keyframes</h4>
+        <p>두 개 이상의 애니메이션 중간 상태를 설정합니다.</p>
+        <ul>
+          <li>from (0%)은 시작점, to (100%)는 종료 시점을 의미합니다</li>
+          <li>중간 50% 등 여러 단계를 설정할 수 있습니다</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>주요 animation 속성</h4>
+        <ul>
+          <li><strong>animation-name:</strong> @keyframes 규칙에 정의된 애니메이션의 이름을 지정</li>
+          <li><strong>animation-duration:</strong> 애니메이션이 한 사이클을 완료하는 데 걸리는 시간을 지정</li>
+          <li><strong>animation-timing-function:</strong> 애니메이션의 진행 속도를 제어하는 속성</li>
+          <li><strong>animation-delay:</strong> 애니메이션 시작 시점을 지정 (양수: 지연 시작, 음수: 중간부터 시작)</li>
+          <li><strong>animation-iteration-count:</strong> 애니메이션 재생 횟수를 설정 (infinite로 설정하면 무한 반복)</li>
+          <li><strong>animation-direction:</strong> 애니메이션의 재생 방향을 지정 (normal, reverse, alternate, alternate-reverse)</li>
+          <li><strong>animation-fill-mode:</strong> 애니메이션 실행 전과 후에 대상에 스타일을 적용하는 방법을 지정</li>
+          <li><strong>animation-play-state:</strong> 애니메이션의 재생 상태를 설정 (paused, running)</li>
+          <li><strong>animation (단축 속성):</strong> 모든 animation 관련 속성을 한 번에 설정</li>
+        </ul>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="3d-properties">
+        <h3>15.4 3D 관련 속성들</h3>
+
+        <h4>CSS 3D 속성</h4>
+        <p>웹 요소를 3D 공간에서 변형하여 시각적으로 더 풍부하고 생동감 있게 만들 수 있습니다.</p>
+
+        <h4>perspective</h4>
+        <p>3D 위치 요소에 원근감을 주기 위해 z=0 평면과 사용자 사이의 거리를 결정합니다. 부모 요소에 적용하며 직계 자식 요소에만 영향을 미칩니다.</p>
+        <ul>
+          <li>값이 크면 변형이 작고, 값이 작을수록 변형이 커집니다</li>
+          <li>perspective는 부모 요소에 사용하는 반면, <code>transform: perspective(800px)</code>는 요소에 직접 적용합니다</li>
+        </ul>
+
+        <h4>perspective-origin</h4>
+        <p>소실점의 위치를 지정합니다. 이는 사용자가 3D 공간을 바라보는 위치(x, y)를 결정합니다. (기본값: 정중앙 center)</p>
+
+        <h4>transform (3D 변형과 관련된 메소드)</h4>
+        <ul>
+          <li><strong>perspective() 함수:</strong> 3D 변형 메소드를 사용하기 위해 원근감을 표현할 기준을 명시하는 데 필수</li>
+          <li><strong>translate3d(x, y, z):</strong> translate 속성의 3D 버전으로, x, y, z 축을 모두 한 번에 이동</li>
+          <li><strong>rotate3d(x, y, z, angle):</strong> 해당 요소를 주어진 각도만큼 x, y, z 축을 기준으로 회전</li>
+          <li><strong>scale3d(x, y, z):</strong> 해당 요소의 크기를 주어진 배율만큼 x, y, z 축 방향으로 늘리거나 줄임</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>기타 3D 관련 속성들</h4>
+        <ul>
+          <li><strong>transform-style:</strong> 요소에 변형을 적용할 때 그 변환이 자식 요소에게도 적용될지를 설정 (flat, preserve-3d)</li>
+          <li><strong>backface-visibility:</strong> 요소가 transform을 통해 3D 공간에서 회전되어 뒷면이 노출될 때, 그 뒷면을 보이게 할지 설정 (visible, hidden)</li>
+        </ul>
+
+        <div class="note">
+          <p><strong>성능 고려:</strong> 복잡한 3D 변환은 렌더링 성능에 영향을 줄 수 있으므로, 필요한 경우에만 사용하고 가능한 간단하게 유지하는 것이 좋습니다.</p>
+        </div>
+      </section>
+    </section>
+
+    <section id="chapter16" class="page-break">
+      <div class="lesson-objective">
+        <h4>학습 목표</h4>
+        <ul>
+          <li>반응형 웹 디자인의 개념과 필요성 이해</li>
+          <li>유동적 그리드, 유동적 이미지, 미디어 쿼리 핵심 기술 습득</li>
+          <li>CSS 함수(calc, clamp, min/max)를 활용한 동적 레이아웃 구현</li>
+          <li>미디어 쿼리를 통한 디바이스별 맞춤 스타일링 능력 개발</li>
+          <li>반응형 이미지 기술(srcset, picture)을 활용한 성능 최적화</li>
+          <li>모바일 퍼스트 접근법과 브레이크포인트 설정 방법 학습</li>
+        </ul>
+      </div>
+
+      <h2>16장 반응형 웹 디자인</h2>
+
+      <section id="responsive-web">
+        <h3>16.1 반응형 웹</h3>
+
+        <h4>반응형 웹 디자인</h4>
+        <p>다양한 디바이스와 화면 크기에 맞춰 웹사이트의 레이아웃과 콘텐츠가 자동으로 조정되는 디자인 방식입니다.</p>
+
+        <div class="important">
+          <p><strong>주의:</strong> 특정 장치에 최적화된 별도의 URL(예: m.example.com)은 반응형 웹 디자인으로 간주하지 않으며, "적응형 웹 디자인" 또는 "별도의 모바일 사이트"로 분류됩니다.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h4>반응형 웹의 필요성</h4>
+        <p>데스크톱부터 스마트폰, 태블릿, 스마트 워치까지 다양한 기기로 웹사이트에 접속하는 현대 웹 환경에서, 하나의 웹사이트로 모든 기기에 대응하여 최적의 사용자 경험을 제공하기 위해 등장했습니다.</p>
+
+        <h4>주요 장점</h4>
+        <ul>
+          <li><strong>사용자 경험 향상:</strong> 모든 디바이스에서 동일한 콘텐츠와 기능을 제공하여 사용자 경험의 일관성을 유지</li>
+          <li><strong>개발 및 유지 보수 효율성:</strong> 단일 코드베이스로 모든 플랫폼을 관리하여 개발 시간과 비용 절감</li>
+          <li><strong>SEO 이점:</strong> Google 및 기타 검색 엔진이 모바일 친화적인 웹사이트를 선호</li>
+          <li><strong>미래 지향적:</strong> 새로운 디바이스가 출시되어도 기존 디자인이 대부분 적절히 대응 가능</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>반응형 웹의 핵심 기술</h4>
+        <ul>
+          <li><strong>유동적 그리드 (Fluid Grid):</strong> 픽셀(px) 대신 상대적인 단위(%, em, rem 등)를 사용하여 화면 크기에 따라 요소들의 크기가 자동으로 조절되도록 레이아웃을 구성</li>
+          <li><strong>유동적 이미지 (Flexible Images):</strong> 이미지도 컨테이너에 맞춰 크기가 조절되도록 설정 (<code>img { max-width: 100%; height: auto; }</code>)</li>
+          <li><strong>미디어 쿼리 (Media Queries):</strong> 화면 크기에 따라 다른 CSS 스타일을 적용할 수 있게 해줍니다</li>
+        </ul>
+
+        <h4>반응형 웹 디자인 구현을 위한 핵심 팁</h4>
+        <ul>
+          <li><strong>모바일 퍼스트 접근 방식:</strong> 모바일 레이아웃부터 디자인을 시작하고, 점진적으로 큰 화면에 대응</li>
+          <li><strong>브레이크포인트 선택:</strong> 일반적인 디바이스 크기(예: 768px(태블릿), 1024px(데스크톱))를 고려</li>
+          <li><strong>콘텐츠 우선:</strong> 디바이스 크기에 관계없이 중요한 콘텐츠는 항상 접근 가능하도록</li>
+          <li><strong>성능 최적화:</strong> 이미지 최적화, 지연 로딩 등을 통해 모바일 환경에서도 빠른 로딩 속도를 유지</li>
+        </ul>
+
+        <div class="exercise">
+          <h4>🎯 실습: Viewport 메타 태그 설정하기</h4>
+          <p>HTML 문서의 &lt;head&gt; 섹션에 다음 메타 태그를 포함해야 합니다:</p>
+          <p><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</code></p>
+          <ul>
+            <li><strong>width=device-width:</strong> 페이지 너비를 기기 화면 너비에 맞춥니다</li>
+            <li><strong>initial-scale=1.0:</strong> 페이지가 처음 로드될 때의 초기 줌 레벨을 100%로 설정</li>
+          </ul>
+          <p><strong>실습 과제:</strong> 기존 HTML 파일을 열어 viewport 메타 태그가 올바르게 설정되어 있는지 확인하고, 없다면 추가해보세요.</p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="css-functions">
+        <h3>16.2 CSS 함수</h3>
+
+        <p>CSS 함수: CSS 속성 값으로 계산식을 지정할 수 있는 도구입니다.</p>
+
+        <h4>주로 사용되는 함수</h4>
+
+        <h5>calc()</h5>
+        <p>CSS 속성 값을 계산할 때 사용합니다. +, -, *, / 사칙연산이 가능하며, 서로 다른 단위끼리 계산할 수 있습니다.</p>
+        <div class="important">
+          <p><strong>주의:</strong> +와 - 연산자의 좌우 공백을 꼭 요구합니다.</p>
+        </div>
+
+        <h5>min(), max()</h5>
+        <p>여러 값 중 최소값 또는 최대값을 선택합니다.</p>
+
+        <h5>clamp(최소값, 선호값, 최대값)</h5>
+        <p>값을 지정된 범위 내로 고정합니다.</p>
+        <ul>
+          <li>선호값이 최소값과 최대값 사이에 있으면 선호값 사용</li>
+          <li>선호값이 최소값보다 작으면 최소값 사용</li>
+          <li>선호값이 최대값보다 크면 최대값 사용</li>
+        </ul>
+
+        <div class="exercise">
+          <h4>🎯 실습: CSS 함수 활용하기</h4>
+          <p><strong>과제 1:</strong> calc() 함수를 사용하여 다음 CSS를 작성해보세요:</p>
+          <ul>
+            <li>전체 너비에서 200px를 뺀 크기: <code>width: calc(100% - 200px);</code></li>
+            <li>뷰포트 높이의 절반에서 헤더 높이(60px)를 뺀 크기: <code>height: calc(50vh - 60px);</code></li>
+          </ul>
+          <p><strong>과제 2:</strong> clamp() 함수로 반응형 폰트 크기를 만들어보세요:</p>
+          <p><code>font-size: clamp(1rem, 2.5vw, 2rem);</code></p>
+          <p>이 코드는 최소 1rem, 최대 2rem 사이에서 화면 크기에 따라 폰트 크기가 조절됩니다.</p>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="media-queries">
+        <h3>16.3 미디어 쿼리</h3>
+
+        <h4>미디어 쿼리 (Media Query)</h4>
+        <p>CSS3의 기능으로, 웹 페이지 또는 애플리케이션의 내용을 다양한 디스플레이 장치와 환경에 맞게 적응적으로 표시하도록 하는 방법을 뜻합니다.</p>
+
+        <h4>미디어 유형 (Media Type)</h4>
+        <p>스타일시트가 어떤 장치나 출력 방식에 적용되어야 하는지를 명시합니다.</p>
+        <p>주요 미디어 타입: all, screen, print, speech, projection, tv</p>
+
+        <h4>미디어 쿼리 기본 구조</h4>
+        <p><code>@media (미디어 특성) { /* 스타일 */ }</code></p>
+
+        <h4>주요 미디어 특성</h4>
+        <ul>
+          <li><strong>너비 기반 미디어 쿼리:</strong> min-width (최소 너비 조건), max-width (최대 너비 조건)</li>
+          <li><strong>방향 기반 미디어 쿼리:</strong> orientation: portrait (세로 방향), orientation: landscape (가로 방향)</li>
+          <li><strong>화면 비율 기반 미디어 쿼리:</strong> aspect-ratio (예: 1/1, 16/9)</li>
+          <li><strong>해상도 기반 미디어 쿼리:</strong> resolution (출력 장치의 픽셀 밀도, 단위: dppx)</li>
+        </ul>
+
+        <h4>논리 연산자</h4>
+        <ul>
+          <li><strong>and 연산자:</strong> 모든 조건을 만족하는 경우에만 스타일을 적용</li>
+          <li><strong>not 연산자:</strong> 조건을 반전시킵니다</li>
+          <li><strong>, (쉼표) 연산자:</strong> 나열된 조건 중 하나라도 만족하는 경우 스타일을 적용</li>
+          <li><strong>only 키워드:</strong> 미디어 쿼리를 지원하는 브라우저에서만 스타일을 적용</li>
+        </ul>
+
+        <div class="page-break"></div>
+
+        <h4>브레이크 포인트 (Breakpoint)</h4>
+        <p>반응형 웹 디자인에서 특정 화면 크기 또는 장치 특성에 따라 디자인이나 레이아웃이 변경되는 지점을 말합니다.</p>
+        <p>미디어 쿼리를 사용하여 min-width 및 max-width 등으로 브레이크 포인트를 정의하고, 해당 지점에서 적용될 스타일을 지정할 수 있습니다.</p>
+
+        <div class="exercise">
+          <h4>🎯 실습: 미디어 쿼리 작성하기</h4>
+          <p><strong>과제 1:</strong> 다음 조건에 맞는 미디어 쿼리를 작성해보세요:</p>
+          <ul>
+            <li>태블릿용 (768px 이상): <code>@media (min-width: 768px) { }</code></li>
+            <li>데스크톱용 (1024px 이상): <code>@media (min-width: 1024px) { }</code></li>
+            <li>가로 방향 화면: <code>@media (orientation: landscape) { }</code></li>
+          </ul>
+          <p><strong>과제 2:</strong> 모바일 퍼스트 접근법으로 버튼 스타일을 작성해보세요:</p>
+          <pre><code>/* 모바일 기본 스타일 */
+.btn { font-size: 14px; padding: 8px 16px; }
+
+/* 태블릿 이상 */
+@media (min-width: 768px) {
+  .btn { font-size: 16px; padding: 12px 24px; }
+}</code></pre>
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section id="responsive-images">
+        <h3>16.4 반응형 이미지</h3>
+
+        <h4>반응형 이미지</h4>
+        <p>웹페이지는 다양한 디바이스 환경을 고려하여 적절한 이미지를 제공해야 합니다.</p>
+
+        <ul>
+          <li><strong>해상도 전환 (Resolution Switching):</strong> 네트워크, 메모리, 성능을 고려하여 크기만 다른 동일 콘텐츠의 이미지를 보여주고 싶을 때 사용</li>
+          <li><strong>아트 디렉션 (Art Direction):</strong> 화면 크기, 방향 등을 고려하여 다양한 레이아웃의 이미지를 제공</li>
+        </ul>
+
+        <h4>해상도 전환 기법 (Resolution Switching)</h4>
+
+        <h5>srcset 속성</h5>
+        <p>브라우저에 제시할 이미지 경로와 이미지의 원본 크기를 지정합니다.</p>
+        <ul>
+          <li><strong>w 서술자:</strong> 이미지의 원본 너비를 브라우저에게 알려줍니다</li>
+          <li><strong>x 서술자:</strong> 화소의 밀도를 나타냅니다 (예: 1x, 2x)</li>
+        </ul>
+
+        <div class="important">
+          <p><strong>주의:</strong> w 서술자와 x 서술자는 동시에 사용할 수 없습니다. srcset을 지원하지 않는 브라우저를 대비하여 src 속성은 필수로 입력해야 합니다.</p>
+        </div>
+
+        <h5>sizes 속성</h5>
+        <p>미디어(뷰포트) 조건문이 참인 경우, 이미지가 차지하게 될 사이즈를 브라우저에 알려줍니다. (px, em 또는 vw 단위 사용)</p>
+
+        <div class="page-break"></div>
+
+        <h4>아트 디렉션 기법</h4>
+
+        <h5>&lt;picture&gt; 요소 사용</h5>
+        <p>여러 &lt;source&gt; 요소와 하나의 &lt;img&gt; 요소를 포함합니다.</p>
+        <ul>
+          <li><strong>&lt;source&gt; 요소:</strong> 브라우저가 선택할 수 있는 이미지 소스를 제공. media와 type 속성을 가질 수 있습니다</li>
+          <li><strong>&lt;img&gt; 요소:</strong> &lt;picture&gt; 요소 내에 필수적으로 포함되어야 하며, 대체 이미지로 사용됩니다</li>
+        </ul>
+
+        <h4>반응형 이미지 기법 정리</h4>
+        <ul>
+          <li><strong>srcset과 sizes:</strong> 동일한 내용의 이미지를 다양한 디바이스의 적절한 해상도와 크기로 보여주고 싶을 때 사용 (브라우저가 알아서 이미지를 선택)</li>
+          <li><strong>&lt;picture&gt;와 &lt;source&gt;:</strong> 브라우저 환경, 화면 크기, 방향 등을 고려하여 다양한 이미지를 보여주고 싶을 때 사용 (개발자가 더 세밀하게 이미지 선택을 제어)</li>
+          <li><strong>단순 스타일링 목적의 이미지:</strong> @media 미디어 쿼리를 사용하여 CSS의 background 속성으로 넣어주어도 됩니다</li>
+        </ul>
+
+        <div class="exercise">
+          <h4>🎯 실습: 반응형 이미지 구현하기</h4>
+          <p><strong>과제 1:</strong> srcset을 사용한 반응형 이미지를 작성해보세요:</p>
+          <pre><code>&lt;img src="image-small.jpg" 
+     srcset="image-small.jpg 400w, 
+             image-medium.jpg 800w, 
+             image-large.jpg 1200w"
+     sizes="(max-width: 400px) 100vw, 
+            (max-width: 800px) 50vw, 
+            25vw"
+     alt="반응형 이미지 예제"&gt;</code></pre>
+          <p><strong>과제 2:</strong> picture 요소로 아트 디렉션을 구현해보세요:</p>
+          <pre><code>&lt;picture&gt;
+  &lt;source media="(min-width: 800px)" srcset="hero-desktop.jpg"&gt;
+  &lt;source media="(min-width: 400px)" srcset="hero-tablet.jpg"&gt;
+  &lt;img src="hero-mobile.jpg" alt="히어로 이미지"&gt;
+&lt;/picture&gt;</code></pre>
+        </div>
+
+        <div class="quiz">
+          <h4>❓ 퀴즈: 반응형 웹 디자인</h4>
+          <ol>
+            <li><strong>다음 중 viewport 메타 태그의 올바른 설정은?</strong>
+              <ul>
+                <li>A) <code>&lt;meta name="viewport" content="width=1024"&gt;</code></li>
+                <li>B) <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code> ✓</li>
+                <li>C) <code>&lt;meta name="viewport" content="width=auto"&gt;</code></li>
+              </ul>
+            </li>
+            <li><strong>모바일 퍼스트 접근법에서 사용하는 미디어 쿼리는?</strong>
+              <ul>
+                <li>A) max-width를 주로 사용</li>
+                <li>B) min-width를 주로 사용 ✓</li>
+                <li>C) width를 주로 사용</li>
+              </ul>
+            </li>
+            <li><strong>clamp(1rem, 2vw, 3rem)의 의미는?</strong>
+              <ul>
+                <li>A) 최소 1rem, 선호 2vw, 최대 3rem ✓</li>
+                <li>B) 최소 3rem, 선호 2vw, 최대 1rem</li>
+                <li>C) 고정값 2rem</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="summary">
+          <h4>📋 16장 요약</h4>
+          <ul>
+            <li><strong>반응형 웹 디자인:</strong> 다양한 디바이스에 맞춰 레이아웃이 자동 조정되는 디자인 방식</li>
+            <li><strong>핵심 기술:</strong> 유동적 그리드, 유동적 이미지, 미디어 쿼리</li>
+            <li><strong>CSS 함수:</strong> calc(), min(), max(), clamp()로 동적인 크기 계산</li>
+            <li><strong>미디어 쿼리:</strong> 화면 크기와 디바이스 특성에 따른 조건부 스타일 적용</li>
+            <li><strong>반응형 이미지:</strong> srcset/sizes (해상도 전환), picture/source (아트 디렉션)</li>
+            <li><strong>모바일 퍼스트:</strong> 작은 화면부터 시작하여 점진적으로 큰 화면에 대응</li>
+            <li><strong>브레이크포인트:</strong> 일반적으로 768px(태블릿), 1024px(데스크톱) 사용</li>
+            <li><strong>viewport 메타 태그:</strong> 반응형 웹의 필수 요소로 모든 HTML에 포함</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      <hr>
+      <p style="text-align: center; color: var(--subheading-color); margin-top: 2rem; transition: color 0.3s ease;">
+        HTML/CSS 에센셜 강의 자료 - 웹 개발의 기초를 탄탄히
+      </p>
+    </footer>
+
+
+
+</body></html>
